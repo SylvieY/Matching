@@ -2,42 +2,41 @@ package algorithm;
 
 import structure.Lecturer;
 import structure.Student;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Stack;
 
 public class MainClass {
-    public static void main(String[] args) {
-        Student s1 = new Student("1");
-        Student s2 = new Student("2");
-        Student s3 = new Student("3");
-        Student s4 = new Student("4");
-        Lecturer l1 = new Lecturer("A");
-        Lecturer l2 = new Lecturer("B");
-        Lecturer l3 = new Lecturer("C");
-        Lecturer l4 = new Lecturer("D");
-        s1.setPreferenceList(new Lecturer[]{l2, l4, l1, l3});
-        s2.setPreferenceList(new Lecturer[]{l3, l1, l4, l2});
-        s3.setPreferenceList(new Lecturer[]{l2, l3, l1, l4});
-        s4.setPreferenceList(new Lecturer[]{l4, l1, l3, l2});
-        l1.setPreferenceList(new Student[]{s2, s1, s4, s3});
-        l2.setPreferenceList(new Student[]{s4, s3, s1, s2});
-        l3.setPreferenceList(new Student[]{s1, s4, s3, s2});
-        l4.setPreferenceList(new Student[]{s2, s1, s4, s3});
-        Student[] studentList = new Student[]{s1, s2, s3, s4};
-//        Lecturer[] lecturerList = new Lecturer[]{l1, l2, l3, l4};
-        Stack<Student> studentStack = new Stack<>();
-        for (Student s: studentList) {
-            studentStack.push(s);
+    // Run 10,000 times. Time consumed: 707537ms.
+    public static void main(String[] args) throws IOException {
+        long startTime = System.currentTimeMillis();
+        for (int i=0; i< 10000; i++) {
+            RandomGenerator rg = new RandomGenerator(1000);
+            File file = rg.createFile("Data_"+ (i+1) + ".txt");
+            rg.generateData(file);
+            Stack<Student> studentStack = rg.studentStack;
+            Student[] studentList = rg.students;
+            StableMatch.match(studentStack);
+            FileWriter fw = new FileWriter(file, true);
+            for (Student s : studentList) {
+                fw.write("{ " + s.getID() + " : " + s.getPartner().getID() + " } ");
+//            System.out.println(s.getID() + " : " + s.getPartner().getID());
+//            System.out.println("Student " + s.getID()+ " is matched with " + s.getPartner().getID());
+            }
+            boolean isStable = CheckStable.isStable(studentList);
+            if (isStable) {
+                fw.write("Stable Check: Pass");
+//                System.out.println("After checking, the above match is stable");
+            } else {
+                fw.write("Stable Check: Fail");
+//                System.out.println("After checking, the above match is not stable");
+            }
+            fw.close();
         }
-        StableMatch.match(studentStack);
-        for (Student s: studentList) {
-            System.out.println("Student " + s.getName() + " is matched with " + s.getPartner().getName());
-        }
-        Boolean isStable = CheckStable.isStable(studentList);
-        if (isStable) {
-            System.out.println("After checking, the above match is stable");
-        }else {
-            System.out.println("After checking, the above match is not stable");
-        }
-
+        long endTime = System.currentTimeMillis();
+        System.out.println("Running time: " + (endTime-startTime) + "ms");
     }
+
 }

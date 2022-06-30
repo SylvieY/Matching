@@ -11,7 +11,7 @@ public class StableMatch {
 
             // take the student on the top of the stack
             Student s = studentStack.peek();
-            System.out.println(s.getName());
+//            System.out.println(s.getName());
 
             int preferencePointer = s.getPreferencePointer();
             Lecturer[] prefLecturerList = s.getPreferenceList();
@@ -25,7 +25,7 @@ public class StableMatch {
                 l.setPartner(s);
                 l.setPreferencePointer(currantRank);
                 l.setFree(false);
-                System.out.println(l.getName()+" was free and is assigned to "+s.getName());
+//                System.out.println(l.getID()+" was free and is assigned to "+s.getID());
             }
             else if (currantRank < l.getPreferencePointer())
             {
@@ -43,11 +43,11 @@ public class StableMatch {
                 // Update the stack
                 studentStack.pop();
                 studentStack.push(formerPartner);
-                System.out.println(l.getName()+" was assigned to "+ formerPartner.getName()+", and is assigned to " + s.getName());
+//                System.out.println(l.getID()+" was assigned to "+ formerPartner.getID()+", and is assigned to " + s.getID());
             }
             else
             {
-                System.out.println(s.getName() + " failed to match the lecturer of index " + preferencePointer + " whose name is " + l.getName());
+//                System.out.println(s.getID() + " failed to match the lecturer of index " + preferencePointer + " whose ID is " + l.getID());
                 s.setPreferencePointer(preferencePointer+1);
             }
         }

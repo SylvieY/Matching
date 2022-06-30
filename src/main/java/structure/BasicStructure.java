@@ -7,6 +7,10 @@ public class BasicStructure {
     int id;
     int preferencePointer;
 
+    public BasicStructure() {
+        this.preferencePointer = 0;
+    }
+
     public BasicStructure(String name) {
         this.name = name;
         this.preferencePointer = 0;

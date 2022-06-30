@@ -1,10 +1,17 @@
 package structure;
 
+import java.util.Arrays;
+
 public class Lecturer extends BasicStructure {
     Student[] preferenceList;
     Student partner;
-    Boolean free=true;
+    Boolean free;
     private static int NEXT_ID = 1;
+
+    public Lecturer() {
+        this.id = Lecturer.NEXT_ID++;
+        this.free = true;
+    }
 
     public Lecturer(String name) {
         super(name);
@@ -13,6 +20,15 @@ public class Lecturer extends BasicStructure {
 
     public Student[] getPreferenceList() {
         return preferenceList;
+    }
+
+    public String preferenceListToString() {
+        int len = preferenceList.length;
+        int[] pl = new int[len];
+        for (int i=0; i<len; i++) {
+            pl[i] = preferenceList[i].getID();
+        }
+        return Arrays.toString(pl);
     }
 
     public Student getPartner() {
