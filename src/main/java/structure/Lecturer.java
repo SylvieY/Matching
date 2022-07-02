@@ -23,12 +23,12 @@ public class Lecturer extends BasicStructure {
     }
 
     public String preferenceListToString() {
-        int len = preferenceList.length;
-        int[] pl = new int[len];
-        for (int i=0; i<len; i++) {
-            pl[i] = preferenceList[i].getID();
-        }
-        return Arrays.toString(pl);
+//        int len = preferenceList.length;
+//        int[] pl = new int[len];
+//        for (int i=0; i<len; i++) {
+//            pl[i] = preferenceList[i].getID();
+//        }
+        return Arrays.toString(preferenceList);
     }
 
     public Student getPartner() {
@@ -49,5 +49,12 @@ public class Lecturer extends BasicStructure {
 
     public void setFree(Boolean free) {
         this.free = free;
+    }
+
+    @Override
+    public String toString() {
+        return "Lecturer{" +
+                "id=" + id +
+                '}';
     }
 }

@@ -24,12 +24,7 @@ public class Student extends BasicStructure {
     }
 
     public String preferenceListToString() {
-        int len = preferenceList.length;
-        int[] pl = new int[len];
-        for (int i=0; i<len; i++) {
-            pl[i] = preferenceList[i].getID();
-        }
-        return Arrays.toString(pl);
+        return Arrays.toString(preferenceList);
     }
 
     public Lecturer getPartner() {
@@ -50,5 +45,12 @@ public class Student extends BasicStructure {
 
     public void setFree(Boolean free) {
         this.free = free;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                '}';
     }
 }

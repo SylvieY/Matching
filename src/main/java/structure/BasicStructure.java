@@ -45,11 +45,11 @@ public class BasicStructure {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         BasicStructure agent = (BasicStructure) o;
-        return id == agent.id && name.equals(agent.name);
+        return id == agent.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, id);
+        return Objects.hash(id);
     }
 }

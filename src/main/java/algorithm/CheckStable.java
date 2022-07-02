@@ -7,10 +7,16 @@ public class CheckStable {
     public static boolean isStable(Student[] S) {
         for (Student s:S) {
             Lecturer[] sPreferenceList = s.getPreferenceList();
+            if (sPreferenceList.length == 0){
+                continue;
+            }
             for (int i=0; i<s.getPreferencePointer(); i++) {
                 Lecturer l = sPreferenceList[i];
                 Student[] lPreferenceList = l.getPreferenceList();
                 int index = indexOfStudent(lPreferenceList, s);
+                if (index == -1){
+                    continue;
+                }
                 if (index < l.getPreferencePointer()) {
                     return false;
                 }
