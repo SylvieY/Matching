@@ -6,9 +6,9 @@ import structure.Student;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
+
+import static algorithm.MainClass.file;
 
 public class RandomGenerator {
     private Random rand = new Random();
@@ -21,7 +21,7 @@ public class RandomGenerator {
         N = n;
     }
 
-    public void generateData(File file) throws IOException {
+    public void generateData() throws IOException {
         Student[] students = new Student[N];
         Lecturer[] lecturers = new Lecturer[N];
         Stack<Student> studentStack = new Stack<>();
@@ -32,66 +32,49 @@ public class RandomGenerator {
             Lecturer l = new Lecturer();
             lecturers[i] = l;
         }
-        FileWriter fw = new FileWriter(file, true);
+//        FileWriter fw = new FileWriter(file, true);
         for (int i=0; i<N; i++) {
-            students[i].setPreferenceList(shuffleLecturers(lecturers));
-//            System.out.println("Student "+students[i].getID()+" preference: "+students[i].preferenceListToString());
-            fw.write("Student "+students[i].getID()+" preference: "+students[i].preferenceListToString()+"\n");
-            lecturers[i].setPreferenceList(shuffleStudents(students));
-//            System.out.println("Lecturer "+lecturers[i].getID()+" preference: "+lecturers[i].preferenceListToString());
-            fw.write("Lecturer "+lecturers[i].getID()+" preference: "+lecturers[i].preferenceListToString()+"\n");
+            students[i].setPreferenceList(incompleteLecturers(lecturers));
+            System.out.println(students[i]+" preference: "+students[i].preferenceListToString());
+//            fw.write(students[i]+" preference: "+students[i].preferenceListToString()+"\n");
         }
-        fw.close();
+        for (int i=0; i<N; i++) {
+            lecturers[i].setPreferenceList(incompleteStudents(students));
+            System.out.println(lecturers[i]+" preference: "+lecturers[i].preferenceListToString());
+//            fw.write(lecturers[i]+" preference: "+lecturers[i].preferenceListToString()+"\n");
+        }
+//        fw.close();
         this.students = students;
         this.lecturers = lecturers;
         this.studentStack = studentStack;
     }
 
-    public void swapStudents(Student[] arr, int a, int b) {
-        Student temp = arr[a];
-        arr[a] = arr[b];
-        arr[b] = temp;
+    // Generate a random incomplete list for Students
+    public Student[] incompleteStudents(Student[] arr) {
+        List<Student> students = new LinkedList<>(Arrays.asList(arr));
+        int len = rand.nextInt(arr.length);
+        Student[] incompleteStudents = new Student[len];
+        while (len>0) {
+            int index = rand.nextInt(students.size());
+            incompleteStudents[len-1] = students.get(index);
+            students.remove(index);
+            len--;
+        }
+        return incompleteStudents;
     }
 
-    public Student[] shuffleStudents(Student[] arr) {
-        Student[] newArray = Arrays.copyOf(arr, arr.length);
-        for (int i = newArray.length; i>0; i--) {
-            int index = rand.nextInt(i);
-            swapStudents(newArray, index, i-1);
+    // Generate a random incomplete list for Lecturers
+    public Lecturer[] incompleteLecturers(Lecturer[] arr) {
+        List<Lecturer> lecturers = new LinkedList<>(Arrays.asList(arr));
+        int len = rand.nextInt(arr.length);
+        Lecturer[] incompleteLecturers = new Lecturer[len];
+        while (len>0) {
+            int index = rand.nextInt(lecturers.size());
+            incompleteLecturers[len-1] = lecturers.get(index);
+            lecturers.remove(index);
+            len--;
         }
-        return newArray;
+        return incompleteLecturers;
     }
 
-    public void swapLecturers(Lecturer[] arr, int a, int b) {
-        Lecturer temp = arr[a];
-        arr[a] = arr[b];
-        arr[b] = temp;
-    }
-
-    public Lecturer[] shuffleLecturers(Lecturer[] arr) {
-        Lecturer[] newArray = Arrays.copyOf(arr, arr.length);
-        for (int i = newArray.length; i>0; i--) {
-            int index = rand.nextInt(i);
-            swapLecturers(newArray, index, i-1);
-        }
-        return newArray;
-    }
-
-    public File createFile(String d) throws IOException {
-        File directory = new File("./src/main/java/data/"+d);
-        String path = null;
-        try {
-            path = directory.getCanonicalPath();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        assert path != null;
-        File file = new File(path);
-        System.out.println(path);
-        if (file.exists()) {
-            file.delete();
-        }
-        file.createNewFile();
-        return file;
-    }
 }
