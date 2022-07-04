@@ -1,21 +1,17 @@
 package algorithm;
 
+import structure.BasicStructure;
 import structure.Lecturer;
 import structure.Student;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
-
-import static algorithm.MainClass.file;
 
 public class RandomGenerator {
     private Random rand = new Random();
     private int N;
     Student[] students;
     Lecturer[] lecturers;
-    Stack<Student> studentStack;
 
     public RandomGenerator(int n) {
         N = n;
@@ -24,32 +20,31 @@ public class RandomGenerator {
     public void generateData() throws IOException {
         Student[] students = new Student[N];
         Lecturer[] lecturers = new Lecturer[N];
-        Stack<Student> studentStack = new Stack<>();
         for (int i=0; i<N; i++) {
             Student s = new Student();
             students[i] = s;
-            studentStack.push(s);
             Lecturer l = new Lecturer();
             lecturers[i] = l;
         }
 //        FileWriter fw = new FileWriter(file, true);
-        for (int i=0; i<N; i++) {
-            students[i].setPreferenceList(incompleteLecturers(lecturers));
-            System.out.println(students[i]+" preference: "+students[i].preferenceListToString());
-//            fw.write(students[i]+" preference: "+students[i].preferenceListToString()+"\n");
+        for(Student s: students) {
+            s.setPreferenceList(incompleteLecturers(lecturers));
+            System.out.println(s+" preference: "+s.preferenceListToString());
+//            fw.write(s+" preference: "+s.preferenceListToString()+"\n");
+
         }
-        for (int i=0; i<N; i++) {
-            lecturers[i].setPreferenceList(incompleteStudents(students));
-            System.out.println(lecturers[i]+" preference: "+lecturers[i].preferenceListToString());
-//            fw.write(lecturers[i]+" preference: "+lecturers[i].preferenceListToString()+"\n");
+        for (Lecturer l: lecturers) {
+            l.setPreferenceList(incompleteStudents(students));
+            System.out.println(l+" preference: "+l.preferenceListToString());
+//            fw.write(l+" preference: "+l.preferenceListToString()+"\n");
+
         }
 //        fw.close();
         this.students = students;
         this.lecturers = lecturers;
-        this.studentStack = studentStack;
     }
 
-    // Generate a random incomplete list for Students
+    // Generate a random incomplete list of Students
     public Student[] incompleteStudents(Student[] arr) {
         List<Student> students = new LinkedList<>(Arrays.asList(arr));
         int len = rand.nextInt(arr.length);

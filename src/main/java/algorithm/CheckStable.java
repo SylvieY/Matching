@@ -1,19 +1,19 @@
 package algorithm;
 
-import structure.Lecturer;
+import structure.BasicStructure;
 import structure.Student;
 
 public class CheckStable {
     public static boolean isStable(Student[] S) {
         for (Student s:S) {
-            Lecturer[] sPreferenceList = s.getPreferenceList();
+            BasicStructure[] sPreferenceList = s.getPreferenceList();
             if (sPreferenceList.length == 0){
                 continue;
             }
             for (int i=0; i<s.getPreferencePointer(); i++) {
-                Lecturer l = sPreferenceList[i];
-                Student[] lPreferenceList = l.getPreferenceList();
-                int index = indexOfStudent(lPreferenceList, s);
+                BasicStructure l = sPreferenceList[i];
+                BasicStructure[] lPreferenceList = l.getPreferenceList();
+                int index = indexOf(lPreferenceList, s);
                 if (index == -1){
                     continue;
                 }
@@ -25,7 +25,7 @@ public class CheckStable {
         return true;
     }
 
-    public static int indexOfStudent(Student[] sList, Student s) {
+    public static int indexOf(BasicStructure[] sList, BasicStructure s) {
         for (int i=0; i<sList.length; i++) {
             if (sList[i].equals(s)) {
                 return i;
