@@ -1,13 +1,12 @@
-package algorithm;
+package StableMatching;
 
 import structure.BasicStructure;
 import structure.Lecturer;
 import structure.Student;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class StableMatch {
 
@@ -20,23 +19,10 @@ public class StableMatch {
 //            System.out.println("Matching for "+s);
             int preferencePointer = s.getPreferencePointer();
             BasicStructure[] prefLecturerList = s.getPreferenceList();
-            // If the preference pointer is out of range, then student s has no more candidates to match
-            if (preferencePointer >= prefLecturerList.length) {
-                // thus pop student s out of stack
-                objStack.pop();
-//                System.out.println("The preference pointer is out of range. Pop out of stack.");
-                continue;
-            }
             BasicStructure l = prefLecturerList[preferencePointer];
-            int currantRank = getIndex(l.getPreferenceList(), s);
-            // -1 means l's preference list does not contain s
-            if (currantRank == -1) {
-                // thus go to the next l that s prefers
-                s.setPreferencePointer(preferencePointer+1);
-//                System.out.println(l+" does not accept " + s + ". Move to the next Lecturer.");
-                continue;
-            }
-
+            int currantRank = l.getRankingList()[s.getID()-1];
+//            System.out.println(s + " pref pointer: " + preferencePointer);
+//            System.out.println(s + " rank in l: "+currantRank);
             if (l.getFree())
             {
                 s.setPartner(l);
@@ -47,8 +33,9 @@ public class StableMatch {
                 l.setFree(false);
 //                System.out.println(l+" is assigned to "+s);
             }
-            else if (currantRank < l.getPreferencePointer())
+            else if ((currantRank-1) < l.getPreferencePointer())   // rank starts from 1, pointer starts from 0
             {
+//                System.out.println(l + " pref pointer: "+ l.getPreferencePointer() + ". Current s is more preferred.");
                 // Update the former partner
                 BasicStructure formerPartner = l.getPartner();
                 int p = formerPartner.getPreferencePointer();
@@ -60,7 +47,7 @@ public class StableMatch {
                 s.setPartner(l);
                 s.setFree(false);
                 l.setPartner(s);
-                l.setPreferencePointer(currantRank);
+                l.setPreferencePointer(currantRank-1);
 
                 // Update the stack
                 objStack.pop();
@@ -105,13 +92,14 @@ public class StableMatch {
         }
     }
 
-    // Get the index
-    public static int getIndex(BasicStructure[] arr, BasicStructure obj) {
-        for (int i=0; i<arr.length; i++) {
-            if (arr[i].equals(obj)) {
-                return i;
-            }
-        }
-        return -1;
-    }
+    // Get the index. --No need because of the ranking list
+//    public static int getIndex(BasicStructure[] arr, BasicStructure obj) {
+//        for (int i=0; i<arr.length; i++) {
+//            if (arr[i].equals(obj)) {
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }
+
 }

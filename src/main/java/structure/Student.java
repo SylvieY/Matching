@@ -1,10 +1,8 @@
 package structure;
 
 public class Student extends BasicStructure {
-    private static int NEXT_ID = 1;
-
-    public Student() {
-        this.id = Student.NEXT_ID++;
+    public Student(int id, int n) {
+        super(id, n);
     }
 
     @Override
