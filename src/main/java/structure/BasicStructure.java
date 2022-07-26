@@ -127,16 +127,5 @@ public class BasicStructure {
         this.free = free;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof BasicStructure)) return false;
-        BasicStructure that = (BasicStructure) o;
-        return id == that.id;
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
 }

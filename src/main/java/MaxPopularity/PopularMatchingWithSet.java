@@ -4,25 +4,26 @@ import structure.BasicStructure;
 import structure.Lecturer;
 import structure.Student;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * Popular Matching Algorithm
+ * Todo: Compare the use of List and Set
+ * Firstly, List.
+ * Check Popular! Check Popular! Check Popular!
  */
-public class PopularMatching {
+public class PopularMatchingWithSet {
     BasicStructure[] proposers, disposers;
-    ArrayList<BasicStructure> vertex, left, right, leftPrime, rightPrime;
+    Set<BasicStructure> vertex, left, right, leftPrime, rightPrime;
     Boolean rPerfect = true;
 
-    public PopularMatching(BasicStructure[] proposers, BasicStructure[] disposers) {
+    public PopularMatchingWithSet(BasicStructure[] proposers, BasicStructure[] disposers) {
         this.proposers = proposers;
         this.disposers = disposers;
-        this.vertex = new ArrayList<>();
+        this.vertex = new HashSet<>();
         this.vertex.addAll(Arrays.asList(proposers));
         this.vertex.addAll(Arrays.asList(disposers));
-        this.left = new ArrayList<>();
+        this.left = new HashSet<>();
     }
 
     public void popularMatching() {
@@ -36,10 +37,9 @@ public class PopularMatching {
     }
 
     public void initiate() {
-        right = new ArrayList<>(vertex);
+        right = new HashSet<>(vertex);
         for (BasicStructure d: disposers) {
             if (d.getFree()) {
-                System.out.println("Unmatched Lecturers: " + d);
                 rPerfect = false;
                 left.add(d);
                 right.remove(d);
@@ -57,23 +57,23 @@ public class PopularMatching {
         int i=1;
         while (!rPerfect) {
             reset();
-            System.out.println("---------------Iteration " + i + "---------------");
-            System.out.println("left : " + left.toString());
-            System.out.println("right: " + right.toString());
+//            System.out.println("---------------Iteration " + i + "---------------");
+//            System.out.println("left : " + left.toString());
+//            System.out.println("right: " + right.toString());
             Stack<BasicStructure> proposerStack = new Stack<>();
             for (BasicStructure l: left) { proposerStack.push(l); }
             StableMatch.match(proposerStack);
-            outputMatch();
+//            outputMatch();
             if (isRPerfect(right)) {
                 rPerfect = true;
-                System.out.println("---------------R-Perfect!!!---------------");
+//                System.out.println("---------------R-Perfect!!!---------------");
                 break;
             }
-            System.out.println("---------------NOT R-Perfect---------------");
+//            System.out.println("---------------NOT R-Perfect---------------");
 
-            System.out.println("---------------Iteration " + i + " Prime---------------");
-            leftPrime = new ArrayList<>(left);
-            rightPrime = new ArrayList<>(right);
+//            System.out.println("---------------Iteration " + i + " Prime---------------");
+            leftPrime = new HashSet<>(left);
+            rightPrime = new HashSet<>(right);
             for (BasicStructure r: right) {
                 if (r.getFree() && (r instanceof Student)) {
                     leftPrime.add(r);
@@ -81,21 +81,21 @@ public class PopularMatching {
                 }
             }
             reset();
-            System.out.println("leftPrime : " + leftPrime.toString());
-            System.out.println("rightPrime: " + rightPrime.toString());
+//            System.out.println("leftPrime : " + leftPrime.toString());
+//            System.out.println("rightPrime: " + rightPrime.toString());
             proposerStack = new Stack<>();
             for (BasicStructure l: leftPrime) { proposerStack.push(l); }
             StableMatch.match(proposerStack);
-            outputMatch();
+//            outputMatch();
             if (isRPerfect(rightPrime)) {
                 rPerfect = true;
-                System.out.println("---------------R-Perfect!!!---------------");
+//                System.out.println("---------------R-Perfect!!!---------------");
                 break;
             }
-            System.out.println("---------------NOT R-Perfect---------------");
+//            System.out.println("---------------NOT R-Perfect---------------");
 
-            ArrayList<BasicStructure> newLeft = new ArrayList<>(left);
-            ArrayList<BasicStructure> newRight = new ArrayList<>(right);
+            Set<BasicStructure> newLeft = new HashSet<>(left);
+            Set<BasicStructure> newRight = new HashSet<>(right);
             for (BasicStructure r: rightPrime) {
                 if (r.getFree() && (r instanceof Lecturer)) {
                     newLeft.add(r);
@@ -106,13 +106,13 @@ public class PopularMatching {
             right = newRight;
             i++;
         }
-        System.out.println("---------------Iteration Over---------------");
+//        System.out.println("---------------Iteration Over---------------");
         System.out.println("----------Maximum Cardinality Popular Matching----------");
         outputMatch();
         System.out.println("--------------------------------------------------------");
     }
 
-    public Boolean isRPerfect(ArrayList<BasicStructure> right) {
+    public Boolean isRPerfect(Set<BasicStructure> right) {
         for (BasicStructure r: right) {
             if (r.getFree()) {return false;}
         }

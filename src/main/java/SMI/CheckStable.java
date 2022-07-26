@@ -19,12 +19,9 @@ public class CheckStable {
                 for (int i=0; i<s.getPreferencePointer(); i++) {
                     BasicStructure l = sPreferenceList[i];
                     int currentRank = l.getRankingList()[s.getID()-1];
-                    if ((currentRank!=0) && ((currentRank-1) < l.getPreferencePointer())) {
+                    if (l.getFree()) {
                         return false;
-                    } else if (currentRank == 0) {
-//                        System.out.println(s);
-//                        System.out.println(l);
-//                        System.out.println("currentRank = 0. It should not happen. Each subject should be matched. ");
+                    } else if ((currentRank!=0) && ((currentRank-1) < l.getPreferencePointer())) {
                         return false;
                     }
                 }

@@ -20,15 +20,16 @@ public class CheckPopular {
         markedB = new HashSet<>();
     }
 
-    public void checkPopular() {
+    public Boolean isPopular() {
         createGM(A);
         if (layeredGraph1()) {
             System.out.println("Graph1 Check PASS!");
             if (layeredGraph2()) {
                 System.out.println("Graph2 Check PASS! \nThe input matching is POPULAR!");
+                return true;
             }
         }
-
+        return false;
     }
 
     public void createGM(BasicStructure[] A) {

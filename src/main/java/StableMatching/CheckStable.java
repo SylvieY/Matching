@@ -22,15 +22,9 @@ public class CheckStable {
                     int currentRank = l.getRankingList()[s.getID()-1];
                     if ((currentRank!=0) && ((currentRank-1) < l.getPreferencePointer())) {
                         return false;
-                    } else if (currentRank == 0) {
-                        System.out.println(s);
-                        System.out.println(l);
-                        System.out.println("currentRank = 0. It should not happen. Each subject should be matched. ");
-                        return false;
                     }
                 }
             }
-
         }
         return true;
     }
