@@ -1,4 +1,4 @@
-package SM_old;
+package MatchingModels.SM_old;
 
 import structure.BasicStructure;
 import structure.Lecturer;

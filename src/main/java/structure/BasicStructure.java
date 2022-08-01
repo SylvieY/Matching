@@ -13,6 +13,9 @@ public class BasicStructure {
     Boolean free;
     Set<BasicStructure> gmPartners;
     Boolean mark;
+    Boolean start;
+    Boolean visited;
+    BasicStructure predecessor;
 
     public BasicStructure(int id, int n) {
         this.id = id;
@@ -24,7 +27,9 @@ public class BasicStructure {
         this.gmPartners = new HashSet<>();
         this.free = true;
         this.mark = false;
-
+        this.start = false;
+        this.visited = false;
+        this.predecessor = null;
     }
 
     public int getID() {
@@ -66,6 +71,30 @@ public class BasicStructure {
         return free;
     }
 
+    public BasicStructure getPredecessor() {
+        return predecessor;
+    }
+
+    public Boolean getStart() {
+        return start;
+    }
+
+    public void setStart(Boolean start) {
+        this.start = start;
+    }
+
+    public Boolean getVisited() {
+        return visited;
+    }
+
+    public void setVisited(Boolean visited) {
+        this.visited = visited;
+    }
+
+    public void setPredecessor(BasicStructure predecessor) {
+        this.predecessor = predecessor;
+    }
+
     public void setPreferencePointer(int preferencePointer) {
         this.preferencePointer = preferencePointer;
     }
@@ -103,10 +132,6 @@ public class BasicStructure {
         this.mark = mark;
     }
 
-    public void resetPreference() {
-        this.preference = new ArrayList<>();
-    }
-
     public void setRankingList(int[] rankingList) {
         this.rankingList = rankingList;
     }
@@ -114,10 +139,6 @@ public class BasicStructure {
     public void setRank(int i, int rank) {
         this.rankingList[i] = rank;
     }
-
-//    public void increaseRankPointer(){
-//        rankPointer++;
-//    }
 
     public void setPartner(BasicStructure partner) {
         this.partner = partner;

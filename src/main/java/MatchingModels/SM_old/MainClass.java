@@ -1,8 +1,5 @@
-package SM_old;
+package MatchingModels.SM_old;
 
-import SM_old.CheckStable;
-import SM_old.RandomGenerator;
-import SM_old.StableMatch;
 import structure.BasicStructure;
 import structure.Lecturer;
 import structure.Student;
@@ -54,7 +51,7 @@ public class MainClass {
         for (BasicStructure s: studentList) {
             studentStack.push(s);
         }
-        StableMatch.match(studentStack);
+        StableMatchOld.match(studentStack);
         for (BasicStructure s: studentList) {
             System.out.println(s+" : " + s.getPartner());
         }
@@ -73,7 +70,7 @@ public class MainClass {
         rg.generateData();
         BasicStructure[] studentList = rg.students;
         Stack<BasicStructure> studentStack = rg.studentStack;
-        StableMatch.match(studentStack);
+        StableMatchOld.match(studentStack);
         for (BasicStructure s: studentList) {
             System.out.println(s+" : " + s.getPartner());
         }

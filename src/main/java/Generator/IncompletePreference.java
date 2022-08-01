@@ -1,4 +1,4 @@
-package MaxPopularity;
+package Generator;
 
 import structure.BasicStructure;
 import structure.Lecturer;
@@ -7,14 +7,14 @@ import structure.Student;
 import java.io.IOException;
 import java.util.*;
 
-public class RandomGenerator {
+public class IncompletePreference {
     private Random rand = new Random();
     private int N;
-    BasicStructure[] students;
-    BasicStructure[] lecturers;
-    Stack<BasicStructure> studentStack = new Stack<>();
+    public BasicStructure[] students;
+    public BasicStructure[] lecturers;
+    public Stack<BasicStructure> studentStack = new Stack<>();
 
-    public RandomGenerator(int n) {
+    public IncompletePreference(int n) {
         N = n;
     }
 
@@ -54,8 +54,8 @@ public class RandomGenerator {
                 newLecturers[index] = newLecturers[N-i-1];
             }
             s.setPreferenceList(s.getPreferenceAsArray());
-            System.out.println(s+" : "+s.preferenceListToString());
-            System.out.println(s+" : "+s.rankingListToString());
+//            System.out.println(s+" : "+s.preferenceListToString());
+//            System.out.println(s+" : "+s.rankingListToString());
         }
         for (BasicStructure l: lecturers) {
             BasicStructure[] lPrefList = l.getPreferenceAsArray();
@@ -68,8 +68,8 @@ public class RandomGenerator {
                 l.setRank(s.getID()-1, i+1);
                 lPrefList[index] = lPrefList[size-i-1];
             }
-            System.out.println(l + " : " + l.preferenceListToString());
-            System.out.println(l + " : " + l.rankingListToString());
+//            System.out.println(l + " : " + l.preferenceListToString());
+//            System.out.println(l + " : " + l.rankingListToString());
         }
     }
 }

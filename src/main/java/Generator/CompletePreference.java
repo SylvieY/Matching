@@ -1,4 +1,4 @@
-package StableMatching;
+package Generator;
 
 import structure.BasicStructure;
 import structure.Lecturer;
@@ -6,20 +6,20 @@ import structure.Student;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.IntStream;
 
-public class RandomGenerator {
+public class CompletePreference {
     private Random rand = new Random();
     private int N;
-    BasicStructure[] students;
-    BasicStructure[] lecturers;
-    Stack<BasicStructure> studentStack = new Stack<>();
+    public BasicStructure[] students;
+    public BasicStructure[] lecturers;
+    public Stack<BasicStructure> studentStack = new Stack<>();
 
-    public RandomGenerator(int n) {
+    public CompletePreference(int n) {
         N = n;
     }
 
-    /** Generate random complete preference lists */
+    /** Generate random complete preference lists
+     * Method 1: generateData() */
     public void generateData() throws IOException {
         BasicStructure[] students = new Student[N];
         BasicStructure[] lecturers = new Lecturer[N];
@@ -66,35 +66,10 @@ public class RandomGenerator {
         }
     }
 
-    public void fullPrefRank() {
-        for (BasicStructure s: students) {
-            BasicStructure[] newLecturers = Arrays.copyOf(lecturers, N);
-            for (int i=0; i<N; i++) {
-                int index = rand.nextInt(N-i);
-                BasicStructure l = newLecturers[index];
-                s.setSinglePreferenceInList(i, l);
-                l.setPreference(s);
-                s.setRank(l.getID()-1, i+1);
-                newLecturers[index] = newLecturers[N-i-1];
-            }
-            System.out.println(s+" : "+s.preferenceListToString());
-            System.out.println(s+" : "+s.rankingListToString());
-        }
-        for (BasicStructure l: lecturers) {
-            BasicStructure[] lPrefList = l.getPreferenceAsArray();
-            int size = lPrefList.length;
-            for (int i=0; i<size; i++) {
-                int index = rand.nextInt(size-i);
-                BasicStructure s = lPrefList[index];
-                l.setSinglePreferenceInList(i, s);
-                l.setRank(s.getID()-1, i+1);
-                lPrefList[index] = lPrefList[size-i-1];
-            }
-            System.out.println(l + " : " + l.preferenceListToString());
-            System.out.println(l + " : " + l.rankingListToString());
-        }
-    }
 
+    /** Generate random complete preference lists
+     * Method 2: generateDataV2()
+     * Use Method 2 instead of Method 1 */
     public void generateDataV2() {
         BasicStructure[] students = new Student[N];
         BasicStructure[] lecturers = new Lecturer[N];
@@ -109,5 +84,36 @@ public class RandomGenerator {
         this.lecturers = lecturers;
         fullPrefRank();
     }
+
+    public void fullPrefRank() {
+        for (BasicStructure s: students) {
+            BasicStructure[] newLecturers = Arrays.copyOf(lecturers, N);
+            for (int i=0; i<N; i++) {
+                int index = rand.nextInt(N-i);
+                BasicStructure l = newLecturers[index];
+                s.setSinglePreferenceInList(i, l);
+                l.setPreference(s);
+                s.setRank(l.getID()-1, i+1);
+                newLecturers[index] = newLecturers[N-i-1];
+            }
+//            System.out.println(s+" : "+s.preferenceListToString());
+//            System.out.println(s+" : "+s.rankingListToString());
+        }
+        for (BasicStructure l: lecturers) {
+            BasicStructure[] lPrefList = l.getPreferenceAsArray();
+            int size = lPrefList.length;
+            for (int i=0; i<size; i++) {
+                int index = rand.nextInt(size-i);
+                BasicStructure s = lPrefList[index];
+                l.setSinglePreferenceInList(i, s);
+                l.setRank(s.getID()-1, i+1);
+                lPrefList[index] = lPrefList[size-i-1];
+            }
+//            System.out.println(l + " : " + l.preferenceListToString());
+//            System.out.println(l + " : " + l.rankingListToString());
+        }
+    }
+
+
 
 }

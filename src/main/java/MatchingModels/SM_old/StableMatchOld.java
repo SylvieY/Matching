@@ -1,11 +1,10 @@
-package SM_old;
+package MatchingModels.SM_old;
 
 import structure.BasicStructure;
-import structure.Lecturer;
-import structure.Student;
+
 import java.util.Stack;
 
-public class StableMatch {
+public class StableMatchOld {
     public static void match(Stack<BasicStructure> studentStack) {
         // while the stack of students is not empty
         while (!studentStack.empty()) {

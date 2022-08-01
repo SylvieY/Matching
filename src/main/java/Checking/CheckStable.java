@@ -1,10 +1,9 @@
-package StableMatching;
+package Checking;
 
 import structure.BasicStructure;
-import structure.Student;
 
 public class CheckStable {
-    public static boolean isStable(BasicStructure[] S, BasicStructure[] L) {
+    public static boolean isStable(BasicStructure[] S) {
         for (BasicStructure s:S) {
             BasicStructure[] sPreferenceList = s.getPreferenceList();
             if (s.getFree()){
@@ -20,7 +19,9 @@ public class CheckStable {
                 for (int i=0; i<s.getPreferencePointer(); i++) {
                     BasicStructure l = sPreferenceList[i];
                     int currentRank = l.getRankingList()[s.getID()-1];
-                    if ((currentRank!=0) && ((currentRank-1) < l.getPreferencePointer())) {
+                    if (l.getFree()) {
+                        return false;
+                    } else if ((currentRank!=0) && ((currentRank-1) < l.getPreferencePointer())) {
                         return false;
                     }
                 }
@@ -28,13 +29,4 @@ public class CheckStable {
         }
         return true;
     }
-
-//    public static int indexOf(BasicStructure[] sList, BasicStructure s) {
-//        for (int i=0; i<sList.length; i++) {
-//            if (sList[i].equals(s)) {
-//                return i;
-//            }
-//        }
-//        return -1;
-//    }
 }

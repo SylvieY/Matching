@@ -1,14 +1,10 @@
-package SMI;
+package MatchingModels.SMI;
 
 import structure.BasicStructure;
-import structure.Lecturer;
-import structure.Student;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Stack;
 
-public class StableMatch {
+public class SMI {
 
     public static void match(Stack<BasicStructure> objStack) {
         // While the stack of students is not empty
@@ -35,7 +31,7 @@ public class StableMatch {
                 l.setPartner(s);
                 l.setPreferencePointer(currantRank-1);
                 l.setFree(false);
-                System.out.println(l+" is assigned to "+s);
+//                System.out.println(l+" is assigned to "+s);
             }
             else if ((currantRank-1) < l.getPreferencePointer())   // rank starts from 1, pointer starts from 0
             {

@@ -1,33 +1,44 @@
-package StableMatching;
+package MatchingModels.StableMatching;
 
+import Checking.CheckStable;
+import Generator.CompletePreference;
 import structure.BasicStructure;
 import structure.Lecturer;
 import structure.Student;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Stack;
 
-public class MainClass {
+public class MainSM {
     private static int passCount=0;
     private static int failCount=0;
 
     public static void main(String[] args) throws IOException {
         long startTime = System.currentTimeMillis();
-        for (int i=0; i<100; i++) {
-            matchWithRandomData(10000);
-        }
-//        matchWithRandomData(4);
+//        for (int i=0; i<100; i++) {
+//            matchWithRandomData(10000);
+//        }
+        matchWithRandomData(6);
         System.out.println("Pass count: " + passCount);
         System.out.println("Fail count: " + failCount);
         long endTime = System.currentTimeMillis();
         System.out.println("Running time: " + (endTime-startTime) + "ms");
     }
 
-    public static void match() {
+    public static void match(BasicStructure[] students, BasicStructure[] lecturers, Stack<BasicStructure> studentStack){
+        long startTime = System.currentTimeMillis();
+        StableMatch.match(studentStack);
+        boolean isStable = CheckStable.isStable(students);
+        if (isStable) {
+            System.out.println("-------------Stable Check: PASS------------");
+        } else {
+            System.out.println("-------------Stable Check: FAIL------------");
+        }
+        long endTime = System.currentTimeMillis();
+        System.out.println("Running time: " + (endTime-startTime) + "ms");
+    }
+
+    public static void match1() {
         Student a1 = new Student(1,6);
         Student a2 = new Student(2,6);
         Student a3 = new Student(3,6);
@@ -63,7 +74,7 @@ public class MainClass {
         for (BasicStructure s: studentList) {
             System.out.println(s+" : " + s.getPartner());
         }
-        boolean isStable = CheckStable.isStable(studentList, lecturerList);
+        boolean isStable = CheckStable.isStable(studentList);
         if (isStable) {
             passCount++;
             System.out.println("-------------Stable Check: PASS------------");
@@ -74,25 +85,15 @@ public class MainClass {
     }
 
     public static void matchWithRandomData(int n) throws IOException {
-//        FileWriter fw = new FileWriter(file, true);
-//        fw.write("Round "+ (i+1) +"\n");
-        RandomGenerator rg = new RandomGenerator(n);
-//        rg.generateData();
+        CompletePreference rg = new CompletePreference(n);
         rg.generateDataV2();
         StableMatch.match(rg.studentStack);
         System.out.println("---------------Stable Match---------------");
         for (BasicStructure s: rg.students) {
             System.out.println(s+" : " + s.getPartner());
         }
-        boolean isStable = CheckStable.isStable(rg.students, rg.lecturers);
-        if (isStable) {
-            passCount++;
-            System.out.println("-------------Stable Check: PASS------------");
-        } else {
-            failCount++;
-            System.out.println("-------------Stable Check: FAIL------------");
-        }
-//        fw.close();
+        boolean isStable = CheckStable.isStable(rg.students);
+        System.out.println("isStable: "+ isStable);
     }
 
     /**

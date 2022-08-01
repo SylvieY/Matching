@@ -1,45 +1,75 @@
-package MaxPopularity;
+package MatchingModels.MaxPopularity;
 
+import Generator.IncompletePreference;
+import Checking.CheckStable;
+import MatchingModels.SMI.*;
 import structure.BasicStructure;
 import structure.Lecturer;
 import structure.Student;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Stack;
 
 /**
  * Popular Matching Algorithm
- * Todo: Compare the use of List and Set
- * Firstly, List.
- * Check Popular! Check Popular! Check Popular!
  */
-public class PopularMatchingWithSet {
+public class PopularMatching {
     BasicStructure[] proposers, disposers;
-    Set<BasicStructure> vertex, left, right, leftPrime, rightPrime;
+    Stack<BasicStructure> proposerStack = new Stack<>();
+    ArrayList<BasicStructure> vertex, left, right, leftPrime, rightPrime;
     Boolean rPerfect = true;
 
-    public PopularMatchingWithSet(BasicStructure[] proposers, BasicStructure[] disposers) {
-        this.proposers = proposers;
-        this.disposers = disposers;
-        this.vertex = new HashSet<>();
+    public PopularMatching(IncompletePreference rg) {
+        this.proposers = rg.students;
+        this.disposers = rg.lecturers;
+        this.proposerStack = rg.studentStack;
+        this.vertex = new ArrayList<>();
         this.vertex.addAll(Arrays.asList(proposers));
         this.vertex.addAll(Arrays.asList(disposers));
-        this.left = new HashSet<>();
+        this.left = new ArrayList<>();
+    }
+
+    public PopularMatching(BasicStructure[] proposers, BasicStructure[] disposers) {
+        this.proposers = proposers;
+        this.disposers = disposers;
+        for (BasicStructure p: proposers) {
+            this.proposerStack.push(p);
+        }
+        this.vertex = new ArrayList<>();
+        this.vertex.addAll(Arrays.asList(proposers));
+        this.vertex.addAll(Arrays.asList(disposers));
+        this.left = new ArrayList<>();
+    }
+
+    public PopularMatching(BasicStructure[] proposers, BasicStructure[] disposers, Stack<BasicStructure> proposerStack) {
+        this.proposers = proposers;
+        this.disposers = disposers;
+        this.proposerStack = proposerStack;
+        this.vertex = new ArrayList<>();
+        this.vertex.addAll(Arrays.asList(proposers));
+        this.vertex.addAll(Arrays.asList(disposers));
+        this.left = new ArrayList<>();
+    }
+
+    public void popularMatchingBasedOnStableMatching() {
+        initiate();
+        iteration();
     }
 
     public void popularMatching() {
-        Stack<BasicStructure> proposerStack = new Stack<>();
-        for (BasicStructure l: proposers) { proposerStack.push(l); }
-        StableMatch.match(proposerStack);
-        outputMatch();
+        SMI.match(proposerStack);
+//        outputMatch();
         stableCheck(proposers);
         initiate();
         iteration();
     }
 
     public void initiate() {
-        right = new HashSet<>(vertex);
+        right = new ArrayList<>(vertex);
         for (BasicStructure d: disposers) {
             if (d.getFree()) {
+                System.out.println("Unmatched Lecturers: " + d);
                 rPerfect = false;
                 left.add(d);
                 right.remove(d);
@@ -62,7 +92,7 @@ public class PopularMatchingWithSet {
 //            System.out.println("right: " + right.toString());
             Stack<BasicStructure> proposerStack = new Stack<>();
             for (BasicStructure l: left) { proposerStack.push(l); }
-            StableMatch.match(proposerStack);
+            SMI.match(proposerStack);
 //            outputMatch();
             if (isRPerfect(right)) {
                 rPerfect = true;
@@ -72,8 +102,8 @@ public class PopularMatchingWithSet {
 //            System.out.println("---------------NOT R-Perfect---------------");
 
 //            System.out.println("---------------Iteration " + i + " Prime---------------");
-            leftPrime = new HashSet<>(left);
-            rightPrime = new HashSet<>(right);
+            leftPrime = new ArrayList<>(left);
+            rightPrime = new ArrayList<>(right);
             for (BasicStructure r: right) {
                 if (r.getFree() && (r instanceof Student)) {
                     leftPrime.add(r);
@@ -85,7 +115,7 @@ public class PopularMatchingWithSet {
 //            System.out.println("rightPrime: " + rightPrime.toString());
             proposerStack = new Stack<>();
             for (BasicStructure l: leftPrime) { proposerStack.push(l); }
-            StableMatch.match(proposerStack);
+            SMI.match(proposerStack);
 //            outputMatch();
             if (isRPerfect(rightPrime)) {
                 rPerfect = true;
@@ -94,8 +124,8 @@ public class PopularMatchingWithSet {
             }
 //            System.out.println("---------------NOT R-Perfect---------------");
 
-            Set<BasicStructure> newLeft = new HashSet<>(left);
-            Set<BasicStructure> newRight = new HashSet<>(right);
+            ArrayList<BasicStructure> newLeft = new ArrayList<>(left);
+            ArrayList<BasicStructure> newRight = new ArrayList<>(right);
             for (BasicStructure r: rightPrime) {
                 if (r.getFree() && (r instanceof Lecturer)) {
                     newLeft.add(r);
@@ -107,12 +137,11 @@ public class PopularMatchingWithSet {
             i++;
         }
 //        System.out.println("---------------Iteration Over---------------");
-        System.out.println("----------Maximum Cardinality Popular Matching----------");
-        outputMatch();
-        System.out.println("--------------------------------------------------------");
+//        System.out.println("----------Maximum Cardinality Popular Matching----------");
+//        outputMatch();
     }
 
-    public Boolean isRPerfect(Set<BasicStructure> right) {
+    public Boolean isRPerfect(ArrayList<BasicStructure> right) {
         for (BasicStructure r: right) {
             if (r.getFree()) {return false;}
         }
@@ -128,7 +157,6 @@ public class PopularMatchingWithSet {
     }
 
     public void outputMatch() {
-//        System.out.println("---------------Current Matching---------------");
         for (BasicStructure s: proposers) {
             if (!s.getFree()) {
                 System.out.println(s + " : " + s.getPartner());

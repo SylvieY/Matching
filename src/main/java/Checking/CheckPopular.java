@@ -1,4 +1,4 @@
-package MaxPopularity;
+package Checking;
 
 
 import structure.BasicStructure;
@@ -21,11 +21,13 @@ public class CheckPopular {
     }
 
     public Boolean isPopular() {
+        System.out.println("----------------------Check Popular------------------------");
         createGM(A);
         if (layeredGraph1()) {
             System.out.println("Graph1 Check PASS!");
             if (layeredGraph2()) {
-                System.out.println("Graph2 Check PASS! \nThe input matching is POPULAR!");
+                System.out.println("Graph2 Check PASS!");
+                System.out.println("-----------------The matching is POPULAR!-----------------");
                 return true;
             }
         }
