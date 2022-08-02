@@ -19,7 +19,7 @@ public class MainMP {
 //            matchWithRandomData(1000);
 //        }
 //        matchWithRandomData(1000);
-        match1();
+        match2();
         long endTime = System.currentTimeMillis();
         System.out.println("Running time: " + (endTime-startTime) + "ms");
         System.out.println("PASS: " + pass);

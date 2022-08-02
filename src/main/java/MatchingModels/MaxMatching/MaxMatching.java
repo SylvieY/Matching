@@ -37,10 +37,8 @@ public class MaxMatching {
         BasicStructure u;
         while ((u=getExposedUnvisited())!=null) {
             initiate();
-            System.out.println("Unmatched & Untried Vertex on the left: " + u);
             BasicStructure endVertex = searchAP(u);
             if (endVertex!=null){
-                System.out.println("Augmenting Path's End Vertex: " + endVertex);
                 augment(endVertex);
             }
         }
@@ -53,10 +51,10 @@ public class MaxMatching {
         BasicStructure u;
         while ((u=getExposedUnvisited())!=null) {
             initiate();
-            System.out.println("Unmatched & Untried Vertex on the left: " + u);
+//            System.out.println("Unmatched & Untried Vertex on the left: " + u);
             BasicStructure endVertex = searchAP(u);
             if (endVertex!=null){
-                System.out.println("Augmenting Path's End Vertex: " + endVertex);
+//                System.out.println("Augmenting Path's End Vertex: " + endVertex);
                 augment(endVertex);
             }
         }
@@ -78,78 +76,73 @@ public class MaxMatching {
     }
 
     public BasicStructure searchAP(BasicStructure u) {
-        System.out.println("----------Start Finding Augmenting Path----------");
+//        System.out.println("----------Start Finding Augmenting Path----------");
         List<BasicStructure> queue = new ArrayList<>();
         u.setStart(true);
-        System.out.println("Start: " + u);
+//        System.out.println("Start: " + u);
         queue.add(u);
-        System.out.println("Starting Queue: " + queue);
+//        System.out.println("Starting Queue: " + queue);
         while (queue.size()>0) {
             BasicStructure v = queue.remove(0);
-            System.out.println("Successfully removed " + v + " from the queue");
-            System.out.println("Queue: " + queue);
-            if (u != v) {
-                System.out.println("Next: " + v);
-            }
+//            System.out.println("Successfully removed " + v + " from the queue");
+//            System.out.println("Queue: " + queue);
+//            if (u != v) {
+//                System.out.println("Next: " + v);
+//            }
             v.setVisited(true);
 //            initiate(v);
 //            System.out.println("Set " + u +  "'s visited to true");
-            System.out.println(v + "'s adjacency list: " + v.preferenceListToString());
+//            System.out.println(v + "'s adjacency list: " + v.preferenceListToString());
             for (BasicStructure w: v.getPreferenceList()){
                 if (!w.getVisited()){
-                    System.out.println("An unvisited partner " + w);
+//                    System.out.println("An unvisited partner " + w);
                     w.setVisited(true);
                     if (w.getFree()){
                         w.setPredecessor(v);
-                        System.out.println("----Augmenting path found with end vertex: "+ w + "----");
+//                        System.out.println("----Augmenting path found with end vertex: "+ w + "----");
                         return w;
                     }else if(w.getPartner() != v){
                         w.setPredecessor(v);
-                        System.out.println(w + " is matched to: " + w.getPartner());
+//                        System.out.println(w + " is matched to: " + w.getPartner());
                         queue.add(w.getPartner());
-                        System.out.println("Add " + w.getPartner() + " to the queue");
-                        System.out.println("Queue: " + queue);
+//                        System.out.println("Add " + w.getPartner() + " to the queue");
+//                        System.out.println("Queue: " + queue);
                     } else {
                         continue;
                     }
                 }
             }
         }
-        System.out.println("No augmenting path found for " + u);
+//        System.out.println("No augmenting path found for " + u);
         return null;
     }
 
     public void augment(BasicStructure endVertex){
         BasicStructure v,w,temp;
         w = endVertex;
-        System.out.println("Set w = " + endVertex);
+//        System.out.println("Set w = " + endVertex);
         v = w.getPredecessor();
-        System.out.println("Update v = " + w + "'s predecessor " + v);
-        System.out.println(v + "'s start status: " + v.getStart());
+//        System.out.println("Update v = " + w + "'s predecessor " + v);
+//        System.out.println(v + "'s start status: " + v.getStart());
         while (!v.getStart()) {
             temp = v.getPartner();
-            System.out.println("Set temp = " + v + "'s partner = " + w);
             v.setPartner(w);
             v.setFree(false);
             v.setPreferencePointer(v.getRankingList()[w.getID()-1]-1);
-            System.out.println("Set " + w + "'s partner = " + v);
             w.setPartner(v);
             w.setFree(false);
             w.setPreferencePointer(w.getRankingList()[v.getID()-1]-1);
 
             w = temp;
-            System.out.println("Update w = " + v + "'s former partner " + w);
-
             v = w.getPredecessor();
-            System.out.println("Update " + v + " = " + w + "'s predecessor");
         }
-        System.out.println(v + " is the start vertex.");
+//        System.out.println(v + " is the start vertex.");
         v.setPartner(w);
         v.setFree(false);
-        v.setPreferencePointer(v.getRankingList()[w.getID()-1]);
+        v.setPreferencePointer(v.getRankingList()[w.getID()-1]-1);
         w.setPartner(v);
         v.setFree(false);
-        v.setPreferencePointer(w.getRankingList()[v.getID()-1]);
+        v.setPreferencePointer(w.getRankingList()[v.getID()-1]-1);
     }
 
     public void initiate() {

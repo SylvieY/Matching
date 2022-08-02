@@ -20,6 +20,8 @@ public class MainClass {
     public static Scanner scanner = new Scanner(System.in);
     static BasicStructure[] students, lecturers;
     static Stack<BasicStructure> studentStack;
+    static int matchingSize, cost;
+    static Integer[] profile;
     public static File file;
     public static FileWriter fw;
     static {
@@ -38,6 +40,7 @@ public class MainClass {
         int algorithmNo = scanner.nextInt();
         System.out.println("Please input the size of agent: ");
         int N  = scanner.nextInt();
+        profile = new Integer[N];
         System.out.println("We provide two ways to generate data.");
         System.out.println("1. Random bipartite data   2. Prepared bipartite data");
         System.out.println("Please select from 1/2: ");
@@ -57,9 +60,14 @@ public class MainClass {
                         StableMatch.match(studentStack);
                         outputMatching("Stable Matching");
                         outputChecking("Stability", CheckStable.isStable(students));
+                        outputAnalysis();
                         break;
                     case 2:
-                        IncompletePreference rg2 = new IncompletePreference(N);
+                        System.out.println("Please enter the minimum length of proposer's preference list: ");
+                        int min = scanner.nextInt();
+                        System.out.println("Please enter the maximum length of proposer's preference list: ");
+                        int max = scanner.nextInt();
+                        IncompletePreference rg2 = new IncompletePreference(N, min, max);
                         rg2.generateData();
                         students = rg2.students;
                         lecturers = rg2.lecturers;
@@ -68,9 +76,14 @@ public class MainClass {
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
+                        outputAnalysis();
                         break;
                     case 3:
-                        IncompletePreference rg3 = new IncompletePreference(N);
+                        System.out.println("Please enter the minimum length of proposer's preference list: ");
+                        int min3 = scanner.nextInt();
+                        System.out.println("Please enter the maximum length of proposer's preference list: ");
+                        int max3 = scanner.nextInt();
+                        IncompletePreference rg3 = new IncompletePreference(N, min3, max3);
                         rg3.generateData();
                         students = rg3.students;
                         lecturers = rg3.lecturers;
@@ -79,12 +92,18 @@ public class MainClass {
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
+                        outputAnalysis();
                         Boolean check3 = MainMP.purePM(students, lecturers, studentStack);
                         outputMatching("Maximum Cardinality Popular Matching");
                         outputChecking("Popularity", check3);
+                        outputAnalysis();
                         break;
                     case 4:
-                        IncompletePreference rg4 = new IncompletePreference(N);
+                        System.out.println("Please enter the minimum length of proposer's preference list: ");
+                        int min4 = scanner.nextInt();
+                        System.out.println("Please enter the maximum length of proposer's preference list: ");
+                        int max4 = scanner.nextInt();
+                        IncompletePreference rg4 = new IncompletePreference(N, min4, max4);
                         rg4.generateData();
                         students = rg4.students;
                         lecturers = rg4.lecturers;
@@ -93,12 +112,18 @@ public class MainClass {
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
+                        outputAnalysis();
                         MaxMatching maxMatching = new MaxMatching(students, lecturers, studentStack);
                         maxMatching.workFlow();
                         outputMatching("Maximum Cardinality Matching");
+                        outputAnalysis();
                         break;
                     case 5:
-                        IncompletePreference rg5 = new IncompletePreference(N);
+                        System.out.println("Please enter the minimum length of proposer's preference list: ");
+                        int min5 = scanner.nextInt();
+                        System.out.println("Please enter the maximum length of proposer's preference list: ");
+                        int max5 = scanner.nextInt();
+                        IncompletePreference rg5 = new IncompletePreference(N, min5, max5);
                         rg5.generateData();
                         students = rg5.students;
                         lecturers = rg5.lecturers;
@@ -107,12 +132,15 @@ public class MainClass {
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
+                        outputAnalysis();
                         Boolean check5 = MainMP.purePM(students, lecturers, studentStack);
                         outputMatching("Maximum Cardinality Popular Matching");
                         outputChecking("Popularity", check5);
+                        outputAnalysis();
                         MaxMatching maxMatching5 = new MaxMatching(students, lecturers, studentStack);
-                        maxMatching5.workFlow();
+                        maxMatching5.pureMM();
                         outputMatching("Maximum Cardinality Matching");
+                        outputAnalysis();
                         break;
                 }
                 break;
@@ -124,32 +152,47 @@ public class MainClass {
                         StableMatch.match(studentStack);
                         outputMatching("Stable Matching");
                         outputChecking("Stability", CheckStable.isStable(students));
+                        outputAnalysis();
                         break;
                     case 2:
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
+                        outputAnalysis();
                         break;
                     case 3:
+                        SMI.match(studentStack);
+                        outputMatching("Stable Matching with Incomplete preference list");
+                        outputChecking("Stability", CheckStable.isStable(students));
+                        outputAnalysis();
                         Boolean check3 = MainMP.purePM(students, lecturers, studentStack);
                         outputMatching("Maximum Cardinality Popular Matching");
                         outputChecking("Popularity", check3);
+                        outputAnalysis();
                         break;
                     case 4:
+                        SMI.match(studentStack);
+                        outputMatching("Stable Matching with Incomplete preference list");
+                        outputChecking("Stability", CheckStable.isStable(students));
+                        outputAnalysis();
                         MaxMatching maxMatching = new MaxMatching(students, lecturers, studentStack);
-                        maxMatching.workFlow();
+                        maxMatching.pureMM();
                         outputMatching("Maximum Cardinality Matching");
+                        outputAnalysis();
                         break;
                     case 5:
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
+                        outputAnalysis();
                         Boolean check5 = MainMP.purePM(students, lecturers, studentStack);
                         outputMatching("Maximum Cardinality Popular Matching");
                         outputChecking("Popularity", check5);
+                        outputAnalysis();
                         MaxMatching maxMatching5 = new MaxMatching(students, lecturers, studentStack);
-                        maxMatching5.workFlow();
+                        maxMatching5.pureMM();
                         outputMatching("Maximum Cardinality Matching");
+                        outputAnalysis();
                         break;
                 }
                 break;
@@ -157,9 +200,13 @@ public class MainClass {
     }
 
     public static void createAgents(int N) {
+        students = new BasicStructure[N];
+        lecturers = new BasicStructure[N];
+        studentStack = new Stack<>();
         for (int i=0; i<N; i++) {
             students[i] = new Student(i+1,N);
             lecturers[i] = new Lecturer(i+1,N);
+            studentStack.push(students[i]);
         }
         List<String> data;
         scanner.nextLine();
@@ -230,6 +277,9 @@ public class MainClass {
     }
 
     public static void outputMatching(String algorithmName) throws IOException {
+        matchingSize = 0;
+        cost = 0;
+        Arrays.fill(profile, 0);
         fw = new FileWriter(file, true);
         System.out.println("---------------" + algorithmName + "---------------");
         fw.write("---------------" + algorithmName + "---------------\n");
@@ -237,7 +287,13 @@ public class MainClass {
             if (!s.getFree()) {
                 System.out.println(s + " : " + s.getPartner());
                 fw.write(s + " : " + s.getPartner() + "\n");
-            } else {
+                matchingSize++;
+                cost += s.getPreferencePointer()+1;
+                profile[s.getPreferencePointer()]++;
+            }
+        }
+        for (BasicStructure s: students) {
+            if (s.getFree()) {
                 System.out.println(s + " : Unmatched");
                 fw.write(s + " : Unmatched \n");
             }
@@ -248,6 +304,7 @@ public class MainClass {
                 fw.write(l + " : Unmatched \n");
             }
         }
+        System.out.println("---------------Over---------------");
         fw.close();
     }
 
@@ -255,6 +312,17 @@ public class MainClass {
         System.out.println("---------------" + type + " Check: " + check + "---------------");
         fw = new FileWriter(file, true);
         fw.write("---------------" + type + " Check: " + check + "---------------\n");
+        fw.close();
+    }
+
+    public static void outputAnalysis() throws IOException {
+        fw = new FileWriter(file, true);
+        System.out.println("Matching Size: " + matchingSize);
+        System.out.println("Cost: " + cost);
+        System.out.println("Profile: " + Arrays.toString(profile));
+        fw.write("Matching Size: " + matchingSize + "\n");
+        fw.write("Cost: " + cost + "\n");
+        fw.write("Profile: " + Arrays.toString(profile) + "\n");
         fw.close();
     }
 }

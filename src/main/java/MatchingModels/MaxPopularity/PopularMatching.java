@@ -59,7 +59,7 @@ public class PopularMatching {
 
     public void popularMatching() {
         SMI.match(proposerStack);
-//        outputMatch();
+        outputMatch();
         stableCheck(proposers);
         initiate();
         iteration();
@@ -69,7 +69,7 @@ public class PopularMatching {
         right = new ArrayList<>(vertex);
         for (BasicStructure d: disposers) {
             if (d.getFree()) {
-                System.out.println("Unmatched Lecturers: " + d);
+//                System.out.println("Unmatched Lecturers: " + d);
                 rPerfect = false;
                 left.add(d);
                 right.remove(d);

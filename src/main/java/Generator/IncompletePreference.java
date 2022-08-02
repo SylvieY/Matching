@@ -9,13 +9,19 @@ import java.util.*;
 
 public class IncompletePreference {
     private Random rand = new Random();
-    private int N;
+    private int N, min, max;
     public BasicStructure[] students;
     public BasicStructure[] lecturers;
     public Stack<BasicStructure> studentStack = new Stack<>();
 
     public IncompletePreference(int n) {
         N = n;
+    }
+
+    public IncompletePreference(int n, int min, int max) {
+        N = n;
+        this.min = min;
+        this.max = max;
     }
 
     public void generateData() throws IOException {
@@ -44,7 +50,12 @@ public class IncompletePreference {
     public void incompleteList() {
         for (BasicStructure s: students) {
             BasicStructure[] newLecturers = Arrays.copyOf(lecturers, N);
-            int len = rand.nextInt(N)+1;
+            int len;
+            if (min!=0) {
+                len = min + rand.nextInt(max-min+1);
+            } else {
+                len = rand.nextInt(N) + 1;
+            }
             for (int i=0; i<len; i++) {
                 int index = rand.nextInt(N-i);
                 BasicStructure l = newLecturers[index];

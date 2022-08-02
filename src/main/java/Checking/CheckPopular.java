@@ -21,13 +21,13 @@ public class CheckPopular {
     }
 
     public Boolean isPopular() {
-        System.out.println("----------------------Check Popular------------------------");
+//        System.out.println("----------------------Check Popular------------------------");
         createGM(A);
         if (layeredGraph1()) {
-            System.out.println("Graph1 Check PASS!");
+//            System.out.println("Graph1 Check PASS!");
             if (layeredGraph2()) {
-                System.out.println("Graph2 Check PASS!");
-                System.out.println("-----------------The matching is POPULAR!-----------------");
+//                System.out.println("Graph2 Check PASS!");
+//                System.out.println("-----------------The matching is POPULAR!-----------------");
                 return true;
             }
         }
@@ -46,7 +46,7 @@ public class CheckPopular {
                     /** If b is unmatched, then (a,b) forms a blocking pair for the popular matching.
                      *  The input matching is not popular. */
                     if (b.getFree()) {
-                        System.out.println("Unmatched Pair detected. The original matching is not popular.");
+//                        System.out.println("Unmatched Pair detected. The original matching is not popular.");
                         break;
                     }
                     /** If b prefers a than its partner in M, then label (a,b) as (1,1).
@@ -150,13 +150,13 @@ public class CheckPopular {
          * If Layer 0 is empty, return "popular".
          * If woman b is unmatched, return "unpopular". */
         if (markedB.isEmpty()){
-            System.out.println("Graph 1 - Layer 0: No marked women.");
+//            System.out.println("Graph 1 - Layer 0: No marked women.");
             return true;
         }
-        System.out.println("Graph 1 - Layer 0: " + markedB);
+//        System.out.println("Graph 1 - Layer 0: " + markedB);
         for (BasicStructure b: markedB) {
             if (b.getFree()) {
-                System.out.println("Graph 1 - An unmatched woman " + b + " is encountered. The input matching is unpopular!");
+//                System.out.println("Graph 1 - An unmatched woman " + b + " is encountered. The input matching is unpopular!");
                 return false;
             }
         }
@@ -172,7 +172,7 @@ public class CheckPopular {
             for (BasicStructure b : layer0) {
                 BasicStructure a = b.getPartner();
                 if (a.getMark()) {
-                    System.out.println("Graph 1 - A marked man " + a + " is encountered. The input matching is unpopular!");
+//                    System.out.println("Graph 1 - A marked man " + a + " is encountered. The input matching is unpopular!");
                     return false;
                 }
                 if (!occurredA.contains(a)){
@@ -186,7 +186,7 @@ public class CheckPopular {
                 return true;
             }
 
-            System.out.println("Graph 1 - Layer 1: " + layer1);
+//            System.out.println("Graph 1 - Layer 1: " + layer1);
 
             /** If Layer1 is not empty, keep on building layers.
              * Layer 2: new neighbors of Layer 1 [b]
@@ -196,7 +196,7 @@ public class CheckPopular {
             for (BasicStructure a : layer1) {
                 for (BasicStructure b: a.getGmPartners()) {
                     if (b.getFree()) {
-                        System.out.println("Graph 1 - An unmatched woman " + b + " is encountered. The input matching is unpopular!");
+//                        System.out.println("Graph 1 - An unmatched woman " + b + " is encountered. The input matching is unpopular!");
                         return false;
                     }
                     if (!occurredB.contains(b)) {
@@ -206,7 +206,7 @@ public class CheckPopular {
                 }
             }
             layer0 = layer2;
-            System.out.println("Graph 1 - Layer 0: " + layer0);
+//            System.out.println("Graph 1 - Layer 0: " + layer0);
         }
         return true;
     }
@@ -216,13 +216,13 @@ public class CheckPopular {
          * If Layer 0 is empty, return "popular".
          * If man a is marked, return "unpopular". */
         if (markedA.isEmpty()){
-            System.out.println("Graph 2 - Layer 0: No marked men.");
+//            System.out.println("Graph 2 - Layer 0: No marked men.");
             return true;
         }
-        System.out.println("Graph 2 - Layer 0: " + markedA);
+//        System.out.println("Graph 2 - Layer 0: " + markedA);
         for (BasicStructure a: markedA) {
             if (a.getFree()) {
-                System.out.println("Graph 2 - An unmatched man " + a + " is encountered. The input matching is unpopular!");
+//                System.out.println("Graph 2 - An unmatched man " + a + " is encountered. The input matching is unpopular!");
                 return false;
             }
         }
@@ -247,7 +247,7 @@ public class CheckPopular {
                 return true;
             }
 
-            System.out.println("Graph 2 - Layer 1: " + layer1);
+//            System.out.println("Graph 2 - Layer 1: " + layer1);
 
             /** If Layer1 is not empty, keep on building layers.
              * Layer 2: new neighbors of Layer 1 [a]
@@ -257,7 +257,7 @@ public class CheckPopular {
             for (BasicStructure b : layer1) {
                 for (BasicStructure a: b.getGmPartners()) {
                     if (a.getFree()) {
-                        System.out.println("Graph 2 - An unmatched man " + a + " is encountered. The input matching is unpopular!");
+//                        System.out.println("Graph 2 - An unmatched man " + a + " is encountered. The input matching is unpopular!");
                         return false;
                     }
                     if (!occurredA.contains(a)) {
@@ -267,7 +267,7 @@ public class CheckPopular {
                 }
             }
             layer0 = layer2;
-            System.out.println("Graph 2 - Layer 0: " + layer0);
+//            System.out.println("Graph 2 - Layer 0: " + layer0);
         }
         return true;
     }
