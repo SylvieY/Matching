@@ -138,13 +138,22 @@ public class Utils {
     }
 
     public static void outputAnalysis() throws IOException {
+        int length = profile.length;
+        for (int i = 0; i< profile.length; i++){
+            if (profile[length-1] == 0) {
+                length -= 1;
+            } else {
+                break;
+            }
+        }
+        int[] newProfile = Arrays.copyOfRange(profile, 0, length);
         fw = new FileWriter(file, true);
         System.out.println("Matching Size: " + matchingSize);
         System.out.println("Cost: " + cost);
-        System.out.println("Profile: " + Arrays.toString(profile));
+        System.out.println("Profile: " + Arrays.toString(newProfile));
         fw.write("Matching Size: " + matchingSize + "\n");
         fw.write("Cost: " + cost + "\n");
-        fw.write("Profile: " + Arrays.toString(profile) + "\n");
+        fw.write("Profile: " + Arrays.toString(newProfile) + "\n");
         fw.close();
     }
 

@@ -11,12 +11,11 @@ public class SMI {
         while (!objStack.empty()) {
 
             // Take the object on the top of the stack
-            BasicStructure s = objStack.peek();
+            BasicStructure s = objStack.pop();
 //            System.out.println("Matching for "+s);
             int preferencePointer = s.getPreferencePointer();
             BasicStructure[] prefLecturerList = s.getPreferenceList();
             if (preferencePointer >= prefLecturerList.length ) {
-                objStack.pop();
                 continue;
             }
             BasicStructure l = prefLecturerList[preferencePointer];
@@ -27,7 +26,6 @@ public class SMI {
             {
                 s.setPartner(l);
                 s.setFree(false);
-                objStack.pop();
                 l.setPartner(s);
                 l.setPreferencePointer(currantRank-1);
                 l.setFree(false);
@@ -50,7 +48,6 @@ public class SMI {
                 l.setPreferencePointer(currantRank-1);
 
                 // Update the stack
-                objStack.pop();
                 objStack.push(formerPartner);
 //                System.out.println(l+" was assigned to "+ formerPartner+", and is assigned to " + s);
             }
@@ -59,6 +56,7 @@ public class SMI {
 //                BasicStructure curPartner = l.getPartner();
 //                System.out.println(l+" prefers current partner " + curPartner + " to " + s);
                 s.setPreferencePointer(preferencePointer+1);
+                objStack.push(s);
             }
         }
     }

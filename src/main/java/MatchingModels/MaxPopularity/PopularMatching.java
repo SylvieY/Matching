@@ -84,7 +84,7 @@ public class PopularMatching {
     }
 
     public void iteration() {
-        int i=1;
+//        int i=1;
         while (!rPerfect) {
             reset();
 //            System.out.println("---------------Iteration " + i + "---------------");
@@ -134,7 +134,7 @@ public class PopularMatching {
             }
             left = newLeft;
             right = newRight;
-            i++;
+//            i++;
         }
 //        System.out.println("---------------Iteration Over---------------");
 //        System.out.println("----------Maximum Cardinality Popular Matching----------");

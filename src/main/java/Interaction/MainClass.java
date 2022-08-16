@@ -20,7 +20,7 @@ public class MainClass {
     static BasicStructure[] students, lecturers;
     static Stack<BasicStructure> studentStack;
     static int matchingSize, cost;
-    static Integer[] profile;
+    static int[] profile;
     public static ArrayList<String[]> tabelCell = new ArrayList<>();
     public static File file;
     public static FileWriter fw;
@@ -40,13 +40,11 @@ public class MainClass {
         int algorithmNo = scanner.nextInt();
         System.out.println("Please input the size of agent: ");
         int N  = scanner.nextInt();
-        profile = new Integer[N];
+        profile = new int[N];
         System.out.println("We provide two ways to generate data.");
         System.out.println("1. Random bipartite data   2. Prepared bipartite data");
         System.out.println("Please select from 1/2: ");
         int dataChoice = scanner.nextInt();
-        System.out.println("dataChoice: " + dataChoice);
-        System.out.println("algorithmNo: " + algorithmNo);
         switch (dataChoice){
             case 1:
                 switch (algorithmNo) {
