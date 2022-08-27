@@ -2,7 +2,7 @@ package MatchingModels.MaxMatching;
 
 import Generator.IncompletePreference;
 import MatchingModels.SMI.*;
-import structure.BasicStructure;
+import Structure.BasicStructure;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +42,9 @@ public class MaxMatching {
                 augment(endVertex);
             }
         }
+//        System.out.println("------Maximum Cardinality Matching------");
+//        outputMatch();
+//        System.out.println("------------------END------------------");
     }
     public void workFlow() {
         SMI.match(proposerStack);
@@ -90,7 +93,6 @@ public class MaxMatching {
 //                System.out.println("Next: " + v);
 //            }
             v.setVisited(true);
-//            initiate(v);
 //            System.out.println("Set " + u +  "'s visited to true");
 //            System.out.println(v + "'s adjacency list: " + v.preferenceListToString());
             for (BasicStructure w: v.getPreferenceList()){
@@ -124,8 +126,11 @@ public class MaxMatching {
         v = w.getPredecessor();
 //        System.out.println("Update v = " + w + "'s predecessor " + v);
 //        System.out.println(v + "'s start status: " + v.getStart());
-        while (!v.getStart()) {
+        while (!v.getStart() || (v.getStart()&&!v.getFree())) {
+//            System.out.println("Go into the while loop");
             temp = v.getPartner();
+//            temp.setFree(true);
+//            temp.setPartner(null);
             v.setPartner(w);
             v.setFree(false);
             v.setPreferencePointer(v.getRankingList()[w.getID()-1]-1);
@@ -141,13 +146,14 @@ public class MaxMatching {
         v.setFree(false);
         v.setPreferencePointer(v.getRankingList()[w.getID()-1]-1);
         w.setPartner(v);
-        v.setFree(false);
-        v.setPreferencePointer(w.getRankingList()[v.getID()-1]-1);
+        w.setFree(false);
+        w.setPreferencePointer(w.getRankingList()[v.getID()-1]-1);
     }
 
     public void initiate() {
         for (BasicStructure w: disposers) {
             w.setVisited(false);
+            w.setPredecessor(null);
         }
     }
 

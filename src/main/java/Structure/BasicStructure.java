@@ -1,4 +1,4 @@
-package structure;
+package Structure;
 
 import java.util.*;
 
@@ -6,7 +6,6 @@ public class BasicStructure {
     int id;
     int preferencePointer;
     int[] rankingList;
-    int rankPointer;
     BasicStructure[] preferenceList;
     ArrayList<BasicStructure> preference;
     BasicStructure partner;
@@ -21,7 +20,6 @@ public class BasicStructure {
         this.id = id;
         this.preferencePointer = 0;
         this.rankingList = new int[n];
-        this.rankPointer = 0;
         this.preferenceList = new BasicStructure[n];
         this.preference = new ArrayList<>();
         this.gmPartners = new HashSet<>();
@@ -44,9 +42,6 @@ public class BasicStructure {
         return rankingList;
     }
 
-    public int getRankPointer() {
-        return rankPointer;
-    }
     public String rankingListToString() {
         return Arrays.toString(rankingList);
     }
@@ -109,7 +104,6 @@ public class BasicStructure {
 
     public void setPreference(BasicStructure s) {
         this.preference.add(s);
-        this.rankPointer++;
     }
 
     public Set<BasicStructure> getGmPartners() {

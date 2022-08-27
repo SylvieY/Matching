@@ -1,6 +1,6 @@
 package MatchingModels.SMI;
 
-import structure.BasicStructure;
+import Structure.BasicStructure;
 
 import java.util.Stack;
 
@@ -19,9 +19,11 @@ public class SMI {
                 continue;
             }
             BasicStructure l = prefLecturerList[preferencePointer];
+            // The following if statement is for popular matching when a lecturer with empty preference list will be placed to be the proposer.
+            if (l == null) {
+                continue;
+            }
             int currantRank = l.getRankingList()[s.getID()-1];
-//            System.out.println(s + " pref pointer: " + preferencePointer);
-//            System.out.println(s + " rank in l: "+currantRank);
             if (l.getFree())
             {
                 s.setPartner(l);

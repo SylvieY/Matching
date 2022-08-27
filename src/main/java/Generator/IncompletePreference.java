@@ -1,8 +1,8 @@
 package Generator;
 
-import structure.BasicStructure;
-import structure.Lecturer;
-import structure.Student;
+import Structure.BasicStructure;
+import Structure.Lecturer;
+import Structure.Student;
 
 import java.io.IOException;
 import java.util.*;

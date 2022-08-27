@@ -2,9 +2,9 @@ package MatchingModels.StableMatching;
 
 import Checking.CheckStable;
 import Generator.CompletePreference;
-import structure.BasicStructure;
-import structure.Lecturer;
-import structure.Student;
+import Structure.BasicStructure;
+import Structure.Lecturer;
+import Structure.Student;
 
 import java.io.IOException;
 import java.util.Stack;
@@ -15,10 +15,10 @@ public class MainSM {
 
     public static void main(String[] args) throws IOException {
         long startTime = System.currentTimeMillis();
-//        for (int i=0; i<100; i++) {
-//            matchWithRandomData(10000);
-//        }
-        matchWithRandomData(6);
+        for (int i=0; i<10000; i++) {
+            matchWithRandomData(1000);
+        }
+//        matchWithRandomData(6);
         System.out.println("Pass count: " + passCount);
         System.out.println("Fail count: " + failCount);
         long endTime = System.currentTimeMillis();
@@ -94,6 +94,11 @@ public class MainSM {
         }
         boolean isStable = CheckStable.isStable(rg.students);
         System.out.println("isStable: "+ isStable);
+        if (isStable) {
+            passCount++;
+        } else {
+            failCount++;
+        }
     }
 
     /**

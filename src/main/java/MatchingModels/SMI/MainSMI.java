@@ -1,8 +1,8 @@
 package MatchingModels.SMI;
 
-import structure.BasicStructure;
-import structure.Lecturer;
-import structure.Student;
+import Structure.BasicStructure;
+import Structure.Lecturer;
+import Structure.Student;
 import Checking.CheckStable;
 import Generator.IncompletePreference;
 
@@ -15,44 +15,44 @@ public class MainSMI {
 
     public static void main(String[] args) throws IOException {
         long startTime = System.currentTimeMillis();
-//        for (int i=0; i<10000; i++) {
-//            matchWithRandomData(1000);
-//        }
+        for (int i=0; i<10000; i++) {
+            matchWithRandomData(100,1,2);
+        }
 //        matchWithRandomData(1000);
-        match2();
+//        match2();
         System.out.println("Pass count: " + passCount);
         System.out.println("Fail count: " + failCount);
         long endTime = System.currentTimeMillis();
         System.out.println("Running time: " + (endTime-startTime) + "ms");
     }
 
-    public static void matchWithRandomData(int n) throws IOException {
-        IncompletePreference rg = new IncompletePreference(n);
+    public static void matchWithRandomData(int n, int min, int max) throws IOException {
+        IncompletePreference rg = new IncompletePreference(n,min,max);
         rg.generateData();
-        BasicStructure[] studentList = rg.students;
-        BasicStructure[] lecturerList = rg.lecturers;
+//        BasicStructure[] studentList = rg.students;
+//        BasicStructure[] lecturerList = rg.lecturers;
         Stack<BasicStructure> studentStack = rg.studentStack;
         SMI.match(studentStack);
-        for (BasicStructure s: studentList) {
-            if (!s.getFree()) {
-                System.out.println(s + " : " + s.getPartner());
-            } else {
-                System.out.println(s + " : Unmatched");
-            }
-        }
-        for (BasicStructure l: lecturerList) {
-            if (l.getFree()) {
-                System.out.println(l + " : Unmatched");
-            }
-        }
-        boolean isStable = CheckStable.isStable(studentList);
-        if (isStable) {
-            passCount++;
-            System.out.println("Stable Check: PASS");
-        } else {
-            failCount++;
-            System.out.println("Stable Check: FAIL");
-        }
+//        for (BasicStructure s: studentList) {
+//            if (!s.getFree()) {
+//                System.out.println(s + " : " + s.getPartner());
+//            } else {
+//                System.out.println(s + " : Unmatched");
+//            }
+//        }
+//        for (BasicStructure l: lecturerList) {
+//            if (l.getFree()) {
+//                System.out.println(l + " : Unmatched");
+//            }
+//        }
+//        boolean isStable = CheckStable.isStable(studentList);
+//        if (isStable) {
+//            passCount++;
+//            System.out.println("Stable Check: PASS");
+//        } else {
+//            failCount++;
+//            System.out.println("Stable Check: FAIL");
+//        }
     }
 
     public static void match(BasicStructure[] students, BasicStructure[] lecturers, Stack<BasicStructure> studentStack){

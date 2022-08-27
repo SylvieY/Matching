@@ -1,6 +1,6 @@
 package Checking;
 
-import structure.BasicStructure;
+import Structure.BasicStructure;
 
 public class CheckStable {
     public static boolean isStable(BasicStructure[] S) {

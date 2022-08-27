@@ -1,4 +1,4 @@
-package structure;
+package Structure;
 
 import java.util.Objects;
 
@@ -12,6 +12,7 @@ public class Student extends BasicStructure {
         return "Student{" +
                 "id=" + id +
                 '}';
+//        return String.valueOf(id);
     }
 
     @Override

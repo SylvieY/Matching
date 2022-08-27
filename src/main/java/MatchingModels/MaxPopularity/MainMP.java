@@ -2,9 +2,9 @@ package MatchingModels.MaxPopularity;
 
 import Checking.CheckPopular;
 import Generator.IncompletePreference;
-import structure.BasicStructure;
-import structure.Lecturer;
-import structure.Student;
+import Structure.BasicStructure;
+import Structure.Lecturer;
+import Structure.Student;
 
 import java.io.IOException;
 import java.util.Stack;
@@ -15,28 +15,29 @@ public class MainMP {
 
     public static void main(String[] args) throws IOException {
         long startTime = System.currentTimeMillis();
-//        for (int i=0; i<10000; i++) {
-//            matchWithRandomData(1000);
-//        }
+        for (int i=0; i<10000; i++) {
+            matchWithRandomData(100,1,2);
+            pass++;
+        }
 //        matchWithRandomData(1000);
-        match2();
+//        match2();
         long endTime = System.currentTimeMillis();
         System.out.println("Running time: " + (endTime-startTime) + "ms");
         System.out.println("PASS: " + pass);
         System.out.println("FAIL: " + fail);
     }
 
-    public static void matchWithRandomData(int n) throws IOException {
-        IncompletePreference rg = new IncompletePreference(n);
+    public static void matchWithRandomData(int n, int min, int max) throws IOException {
+        IncompletePreference rg = new IncompletePreference(n,min,max);
         rg.generateData();
         PopularMatching pm = new PopularMatching(rg);
         pm.popularMatching();
-        CheckPopular cp = new CheckPopular(rg.students);
-        if (cp.isPopular()) {
-            pass += 1;
-        } else {
-            fail += 1;
-        }
+//        CheckPopular cp = new CheckPopular(rg.students);
+//        if (cp.isPopular()) {
+//            pass += 1;
+//        } else {
+//            fail += 1;
+//        }
     }
 
     public static Boolean match(BasicStructure[] students, BasicStructure[] lecturers, Stack<BasicStructure> studentStack) {

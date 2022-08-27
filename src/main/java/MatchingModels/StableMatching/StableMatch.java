@@ -1,6 +1,6 @@
 package MatchingModels.StableMatching;
 
-import structure.BasicStructure;
+import Structure.BasicStructure;
 
 import java.util.*;
 

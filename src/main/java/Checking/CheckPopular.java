@@ -1,7 +1,7 @@
 package Checking;
 
 
-import structure.BasicStructure;
+import Structure.BasicStructure;
 
 import java.util.*;
 

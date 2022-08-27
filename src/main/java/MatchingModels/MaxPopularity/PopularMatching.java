@@ -3,9 +3,9 @@ package MatchingModels.MaxPopularity;
 import Generator.IncompletePreference;
 import Checking.CheckStable;
 import MatchingModels.SMI.*;
-import structure.BasicStructure;
-import structure.Lecturer;
-import structure.Student;
+import Structure.BasicStructure;
+import Structure.Lecturer;
+import Structure.Student;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -59,8 +59,8 @@ public class PopularMatching {
 
     public void popularMatching() {
         SMI.match(proposerStack);
-        outputMatch();
-        stableCheck(proposers);
+//        outputMatch();
+//        stableCheck(proposers);
         initiate();
         iteration();
     }

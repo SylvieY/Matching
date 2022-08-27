@@ -1,15 +1,13 @@
 package Interaction;
 
-import structure.BasicStructure;
-import structure.Lecturer;
-import structure.Student;
+import Structure.BasicStructure;
+import Structure.Lecturer;
+import Structure.Student;
 
 import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageOutputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Stack;
@@ -33,6 +31,9 @@ public class Utils {
         for (int i=0; i<N; i++) {
             data = List.of(scanner.nextLine().split("[:,]"));
             BasicStructure s = students[i];
+            if(data.size()<=1) {
+                continue;
+            }
             for (int k=1; k<data.size(); k++) {
                 int lid = Integer.parseInt(data.get(k));
                 BasicStructure l = lecturers[lid-1];
@@ -44,6 +45,9 @@ public class Utils {
         for (int i=N; i<N*2; i++) {
             data = List.of(scanner.nextLine().split("[:,]"));
             BasicStructure l = lecturers[i-N];
+            if(data.size()<=1) {
+                continue;
+            }
             for (int k=1; k<data.size(); k++) {
                 int sid = Integer.parseInt(data.get(k));
                 BasicStructure s = students[sid-1];
@@ -57,11 +61,11 @@ public class Utils {
 
 
     public static File createFile(String d) throws IOException {
-        File dir = new File("./src/main/java/data/");
+        File dir = new File("./src/main/java/Result/");
         if (!dir.exists()){
             dir.mkdir();
         }
-        File directory = new File("./src/main/java/data/"+d);
+        File directory = new File("./src/main/java/Result/"+d);
         String path = null;
         try {
             path = directory.getCanonicalPath();
@@ -84,14 +88,16 @@ public class Utils {
         for (BasicStructure s: students) {
             System.out.println(s + " preference : "  + s.preferenceListToString());
             System.out.println(s + " rank list : "  + s.rankingListToString());
-            fw.write(s + " preference : "  + s.preferenceListToString() + "\n");
-            fw.write(s + " rank list : "  + s.rankingListToString() + "\n");
+//            fw.write(s + " preference : "  + s.preferenceListToString() + "\n");
+//            fw.write(s + " rank list : "  + s.rankingListToString() + "\n");
+            fw.write(s + ":"  + s.preferenceListToString() + "\n");
         }
         for (BasicStructure l: lecturers) {
             System.out.println(l + " preference : "  + l.preferenceListToString());
             System.out.println(l + " rank list : "  + l.rankingListToString());
-            fw.write(l + " preference : "  + l.preferenceListToString() + "\n");
-            fw.write(l + " rank list : "  + l.rankingListToString() + "\n");
+//            fw.write(l + " preference : "  + l.preferenceListToString() + "\n");
+//            fw.write(l + " rank list : "  + l.rankingListToString() + "\n");
+            fw.write(l + ":"  + l.preferenceListToString() + "\n");
         }
         fw.close();
     }
@@ -112,7 +118,6 @@ public class Utils {
                 profile[s.getPreferencePointer()]++;
             }
         }
-        tabelCell.add(new String[]{algorithmName, String.valueOf(matchingSize), String.valueOf(cost), Arrays.toString(profile)});
         for (BasicStructure s: students) {
             if (s.getFree()) {
                 System.out.println(s + " : Unmatched");
@@ -137,7 +142,7 @@ public class Utils {
         fw.close();
     }
 
-    public static void outputAnalysis() throws IOException {
+    public static void outputAnalysis(String algorithmName) throws IOException {
         int length = profile.length;
         for (int i = 0; i< profile.length; i++){
             if (profile[length-1] == 0) {
@@ -147,6 +152,7 @@ public class Utils {
             }
         }
         int[] newProfile = Arrays.copyOfRange(profile, 0, length);
+        tabelCell.add(new String[]{algorithmName, String.valueOf(matchingSize), String.valueOf(cost), Arrays.toString(newProfile)});
         fw = new FileWriter(file, true);
         System.out.println("Matching Size: " + matchingSize);
         System.out.println("Cost: " + cost);
@@ -199,7 +205,7 @@ public class Utils {
     }
 
     public static void createImage(BufferedImage img, String d){
-        File dir = new File("./src/main/java/data/" + d);
+        File dir = new File("./src/main/java/Result/" + d);
         String path = null;
         try {
             path = dir.getCanonicalPath();

@@ -6,7 +6,7 @@ import MatchingModels.StableMatching.*;
 import MatchingModels.SMI.*;
 import MatchingModels.MaxPopularity.*;
 import MatchingModels.MaxMatching.*;
-import structure.BasicStructure;
+import Structure.BasicStructure;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -58,7 +58,7 @@ public class MainClass {
                         StableMatch.match(studentStack);
                         outputMatching("Stable Matching");
                         outputChecking("Stability", CheckStable.isStable(students));
-                        outputAnalysis();
+                        outputAnalysis("Stable Matching");
                         tableGeneration();
                         break;
                     case 2:
@@ -75,7 +75,7 @@ public class MainClass {
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
-                        outputAnalysis();
+                        outputAnalysis("Stable Matching with Incomplete preference list");
                         tableGeneration();
                         break;
                     case 3:
@@ -92,11 +92,11 @@ public class MainClass {
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
-                        outputAnalysis();
+                        outputAnalysis("Stable Matching with Incomplete preference list");
                         Boolean check3 = MainMP.purePM(students, lecturers, studentStack);
                         outputMatching("Maximum Cardinality Popular Matching");
                         outputChecking("Popularity", check3);
-                        outputAnalysis();
+                        outputAnalysis("Maximum Cardinality Popular Matching");
                         tableGeneration();
                         break;
                     case 4:
@@ -113,11 +113,11 @@ public class MainClass {
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
-                        outputAnalysis();
+                        outputAnalysis("Stable Matching with Incomplete preference list");
                         MaxMatching maxMatching = new MaxMatching(students, lecturers, studentStack);
                         maxMatching.workFlow();
                         outputMatching("Maximum Cardinality Matching");
-                        outputAnalysis();
+                        outputAnalysis("Maximum Cardinality Matching");
                         tableGeneration();
                         break;
                     case 5:
@@ -134,15 +134,15 @@ public class MainClass {
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
-                        outputAnalysis();
+                        outputAnalysis("Stable Matching with Incomplete preference list");
                         Boolean check5 = MainMP.purePM(students, lecturers, studentStack);
                         outputMatching("Maximum Cardinality Popular Matching");
                         outputChecking("Popularity", check5);
-                        outputAnalysis();
+                        outputAnalysis("Maximum Cardinality Popular Matching");
                         MaxMatching maxMatching5 = new MaxMatching(students, lecturers, studentStack);
                         maxMatching5.pureMM();
                         outputMatching("Maximum Cardinality Matching");
-                        outputAnalysis();
+                        outputAnalysis("Maximum Cardinality Matching");
                         tableGeneration();
                         break;
                 }
@@ -155,51 +155,52 @@ public class MainClass {
                         StableMatch.match(studentStack);
                         outputMatching("Stable Matching");
                         outputChecking("Stability", CheckStable.isStable(students));
-                        outputAnalysis();
+                        outputAnalysis("Stable Matching");
                         tableGeneration();
                         break;
                     case 2:
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
-                        outputAnalysis();
+                        outputAnalysis("Stable Matching with Incomplete preference list");
                         tableGeneration();
                         break;
                     case 3:
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
-                        outputAnalysis();
+                        outputAnalysis("Stable Matching with Incomplete preference list");
                         Boolean check3 = MainMP.purePM(students, lecturers, studentStack);
                         outputMatching("Maximum Cardinality Popular Matching");
                         outputChecking("Popularity", check3);
-                        outputAnalysis();
+                        outputAnalysis("Maximum Cardinality Popular Matching");
                         tableGeneration();
                         break;
                     case 4:
-                        SMI.match(studentStack);
-                        outputMatching("Stable Matching with Incomplete preference list");
-                        outputChecking("Stability", CheckStable.isStable(students));
-                        outputAnalysis();
+//                        SMI.match(studentStack);
+//                        outputMatching("Stable Matching with Incomplete preference list");
+//                        outputChecking("Stability", CheckStable.isStable(students));
+//                        outputAnalysis("Stable Matching with Incomplete preference list");
                         MaxMatching maxMatching = new MaxMatching(students, lecturers, studentStack);
                         maxMatching.pureMM();
                         outputMatching("Maximum Cardinality Matching");
-                        outputAnalysis();
+                        outputAnalysis("Maximum Cardinality Matching");
                         tableGeneration();
                         break;
                     case 5:
                         SMI.match(studentStack);
                         outputMatching("Stable Matching with Incomplete preference list");
                         outputChecking("Stability", CheckStable.isStable(students));
-                        outputAnalysis();
+                        outputAnalysis("Stable Matching with Incomplete preference list");
                         Boolean check5 = MainMP.purePM(students, lecturers, studentStack);
                         outputMatching("Maximum Cardinality Popular Matching");
                         outputChecking("Popularity", check5);
-                        outputAnalysis();
+                        outputAnalysis("Maximum Cardinality Popular Matching");
+
                         MaxMatching maxMatching5 = new MaxMatching(students, lecturers, studentStack);
                         maxMatching5.pureMM();
                         outputMatching("Maximum Cardinality Matching");
-                        outputAnalysis();
+                        outputAnalysis("Maximum Cardinality Matching");
                         tableGeneration();
                         break;
                 }
