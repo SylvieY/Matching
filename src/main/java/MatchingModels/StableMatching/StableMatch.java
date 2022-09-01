@@ -4,6 +4,12 @@ import Structure.BasicStructure;
 
 import java.util.*;
 
+/**
+ * Stable Matching algorithm with Complete Preference Lists
+ *
+ * @author yangsuiyi  2022-09-01
+ *
+ * */
 public class StableMatch {
 
     public static void match(Stack<BasicStructure> objStack) {

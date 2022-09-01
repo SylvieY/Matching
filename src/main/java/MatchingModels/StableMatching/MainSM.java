@@ -9,12 +9,19 @@ import Structure.Student;
 import java.io.IOException;
 import java.util.Stack;
 
+/**
+ * The main class that runs Stable Matching with Complete Preference Lists.
+ *
+ * @author yangsuiyi 2022-09-01
+ *
+ * */
 public class MainSM {
     private static int passCount=0;
     private static int failCount=0;
 
     public static void main(String[] args) throws IOException {
         long startTime = System.currentTimeMillis();
+        /** Run Maximum Matching for 10,000 times to calculate the average running time. */
         for (int i=0; i<10000; i++) {
             matchWithRandomData(1000);
         }
@@ -25,6 +32,25 @@ public class MainSM {
         System.out.println("Running time: " + (endTime-startTime) + "ms");
     }
 
+    /** Run the Stable Matching algorithm on randomly generated data */
+    public static void matchWithRandomData(int n) throws IOException {
+        CompletePreference rg = new CompletePreference(n);
+        rg.generateDataV2();
+        StableMatch.match(rg.studentStack);
+        System.out.println("---------------Stable Match---------------");
+        for (BasicStructure s: rg.students) {
+            System.out.println(s+" : " + s.getPartner());
+        }
+        boolean isStable = CheckStable.isStable(rg.students);
+        System.out.println("isStable: "+ isStable);
+        if (isStable) {
+            passCount++;
+        } else {
+            failCount++;
+        }
+    }
+
+    /** Run the Stable Matching algorithm with given data */
     public static void match(BasicStructure[] students, BasicStructure[] lecturers, Stack<BasicStructure> studentStack){
         long startTime = System.currentTimeMillis();
         StableMatch.match(studentStack);
@@ -38,6 +64,8 @@ public class MainSM {
         System.out.println("Running time: " + (endTime-startTime) + "ms");
     }
 
+    /** Run the Stable Matching algorithm on given data
+     * Size: 6 */
     public static void match1() {
         Student a1 = new Student(1,6);
         Student a2 = new Student(2,6);
@@ -84,22 +112,7 @@ public class MainSM {
         }
     }
 
-    public static void matchWithRandomData(int n) throws IOException {
-        CompletePreference rg = new CompletePreference(n);
-        rg.generateDataV2();
-        StableMatch.match(rg.studentStack);
-        System.out.println("---------------Stable Match---------------");
-        for (BasicStructure s: rg.students) {
-            System.out.println(s+" : " + s.getPartner());
-        }
-        boolean isStable = CheckStable.isStable(rg.students);
-        System.out.println("isStable: "+ isStable);
-        if (isStable) {
-            passCount++;
-        } else {
-            failCount++;
-        }
-    }
+
 
     /**
     // Create File

@@ -14,8 +14,16 @@ import java.util.Stack;
 
 import static Interaction.MainClass.*;
 
+/**
+ * Provide utils for the main class.
+ *
+ * @author yangsuiyi
+ *
+ * */
 public class Utils {
 
+    /** Create N students and N lecturers,
+     * Form their preference lists based on the user input data. */
     public static void createAgents(int N) {
         students = new BasicStructure[N];
         lecturers = new BasicStructure[N];
@@ -59,7 +67,7 @@ public class Utils {
         scanner.close();
     }
 
-
+    /** Create file directory, form a file path and create a file with the input file name. */
     public static File createFile(String d) throws IOException {
         File dir = new File("./src/main/java/Result/");
         if (!dir.exists()){
@@ -81,6 +89,7 @@ public class Utils {
         return file;
     }
 
+    /** Output the original agents and their preference lists to both command line and the file. */
     public static void outputData() throws IOException {
         fw = new FileWriter(file, true);
         System.out.println("---------------Data---------------");
@@ -102,6 +111,7 @@ public class Utils {
         fw.close();
     }
 
+    /** Output the result matching to both command line and the file. */
     public static void outputMatching(String algorithmName) throws IOException {
         matchingSize = 0;
         cost = 0;
@@ -135,6 +145,7 @@ public class Utils {
         fw.close();
     }
 
+    /** Output the checking result to command line and the file. */
     public static void outputChecking(String type, Boolean check) throws IOException {
         System.out.println("---------------" + type + " Check: " + check + "---------------");
         fw = new FileWriter(file, true);
@@ -142,6 +153,7 @@ public class Utils {
         fw.close();
     }
 
+    /** Output the matching size, cost and profile on behalf of students to command line and file. */
     public static void outputAnalysis(String algorithmName) throws IOException {
         int length = profile.length;
         for (int i = 0; i< profile.length; i++){
@@ -163,6 +175,8 @@ public class Utils {
         fw.close();
     }
 
+    /** Generate a table that contains the matching size, cost and profile of different algorithms.
+     * The table is formed as a picture (.jpg) */
     public static void tableGeneration() {
         int fontSize = 15;
         int rowCount = tabelCell.size() + 2;
@@ -204,6 +218,7 @@ public class Utils {
         createImage(img, "DataComparison.jpg");
     }
 
+    /** Create the table image. */
     public static void createImage(BufferedImage img, String d){
         File dir = new File("./src/main/java/Result/" + d);
         String path = null;

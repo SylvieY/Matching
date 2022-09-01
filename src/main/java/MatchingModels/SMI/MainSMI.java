@@ -9,12 +9,19 @@ import Generator.IncompletePreference;
 import java.io.IOException;
 import java.util.Stack;
 
+/**
+ * The main class that runs Stable Matching with Incomplete Preference Lists.
+ *
+ * @author yangsuiyi 2022-09-01
+ *
+ * */
 public class MainSMI {
     private static int passCount=0;
     private static int failCount=0;
 
     public static void main(String[] args) throws IOException {
         long startTime = System.currentTimeMillis();
+        /** Run Maximum Matching for 10,000 times to calculate the average running time. */
         for (int i=0; i<10000; i++) {
             matchWithRandomData(100,1,2);
         }
@@ -26,6 +33,7 @@ public class MainSMI {
         System.out.println("Running time: " + (endTime-startTime) + "ms");
     }
 
+    /** Run the Stable Matching algorithm on randomly generated data with given parameters */
     public static void matchWithRandomData(int n, int min, int max) throws IOException {
         IncompletePreference rg = new IncompletePreference(n,min,max);
         rg.generateData();
@@ -55,6 +63,7 @@ public class MainSMI {
 //        }
     }
 
+    /** Run the Stable Matching algorithm with given data */
     public static void match(BasicStructure[] students, BasicStructure[] lecturers, Stack<BasicStructure> studentStack){
         SMI.match(studentStack);
         boolean isStable = CheckStable.isStable(students);
@@ -65,6 +74,9 @@ public class MainSMI {
         }
     }
 
+
+    /** Run the Stable Matching algorithm on given data
+     * Size: 6 */
     public static void match1() {
         Student a1 = new Student(1,6);
         Student a2 = new Student(2,6);
@@ -129,6 +141,8 @@ public class MainSMI {
         }
     }
 
+    /** Run the Stable Matching algorithm on given data
+     * Size: 20 */
     public static void match2() {
         Student a1 = new Student(1,20);
         Student a2 = new Student(2,20);

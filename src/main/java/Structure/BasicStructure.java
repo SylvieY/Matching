@@ -2,18 +2,52 @@ package Structure;
 
 import java.util.*;
 
+/** BasicStructure is the mutual class for two sides of agents.
+ *
+ * @author yangsuiyi  2022-09-01
+ *
+ * */
 public class BasicStructure {
+    /** ID as an integer, to represent the agent, starting from 1. */
     int id;
+
+    /** The pointer that indicates the current partner's preference rank, starting from 0. */
     int preferencePointer;
+
+    /** An array that stores the ranks of neighbours in current agent's preference list. Rank starts from 1. */
     int[] rankingList;
+
+    /** An array that records the current agent's preference over the other side of agents. */
     BasicStructure[] preferenceList;
+
+    /** A list of preferences. Used to add single agent to the preference list when generating random data. */
     ArrayList<BasicStructure> preference;
+
+    /** The attribute used to store the matched agent. */
     BasicStructure partner;
+
+    /** The matching status of the current agent.
+     * True stands for free, and false stands for matched. */
     Boolean free;
+
+    /** A set of agents, forming a reduced graph related to a matching,
+     * used in the algorithm that checks whether the matching is popular. */
     Set<BasicStructure> gmPartners;
+
+    /** The attribute indicating whether the current agent is marked,
+     * used in the algorithm that checks whether the matching is popular. */
     Boolean mark;
+
+    /** The attribute indicating whether the current agent is the start of an augmenting path,
+     * used in the algorithm that checks whether the matching is popular.*/
     Boolean start;
+
+    /** The attribute indicating whether the current agent has been visited,
+     * used in the algorithm that checks whether the matching is popular. */
     Boolean visited;
+
+    /** The attribute used to store the previous vertex of the current agent in an augmenting path,
+     * used in the algorithm that checks whether the matching is popular. */
     BasicStructure predecessor;
 
     public BasicStructure(int id, int n) {

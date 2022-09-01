@@ -17,6 +17,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.ss.usermodel.Row;
 
+
+/**
+ * The class that conducts experiments on different parameters and different algorithms.
+ * The result is output to a spreadsheet.
+ *
+ * @author yangsuiyi 2022-09-01
+ * */
 public class Experiment {
     static BasicStructure[] students, lecturers;
     static Stack<BasicStructure> studentStack;
@@ -28,6 +35,7 @@ public class Experiment {
     }
 
     public static void experiment() throws IOException {
+        /** Create one workbook with 12 spreadsheets. */
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet spreadsheet_SMI = workbook.createSheet("SMI");
         XSSFSheet spreadsheet_SMI_profileA = workbook.createSheet("SMI_Profile_Men");
@@ -42,9 +50,10 @@ public class Experiment {
         XSSFSheet spreadsheet_MM_profileB = workbook.createSheet("MM_Profile_Women");
         XSSFSheet spreadsheet_MM_profileAll = workbook.createSheet("MM_Overall_Profile");
 
-        int N = 1000;
+        /** Control the parameters here. */
+        int N = 5000;
         int min = 1;
-        int max = 30;
+        int max = 5;
         profileA = new int[N];
         profileB = new int[N];
         profileAll = new int[N];
@@ -83,6 +92,7 @@ public class Experiment {
         }
     }
 
+    /** Write the headers to the spreadsheets. */
     public static void initiateSheet(XSSFSheet sheet_stat, XSSFSheet sheet_pa, XSSFSheet sheet_pb, XSSFSheet sheet_pc, int n) {
         Row row = sheet_stat.createRow(0);
         row.createCell(0).setCellValue("No.");
@@ -115,6 +125,7 @@ public class Experiment {
         }
     }
 
+    /** Write the data onto the spreadsheet. */
     public static void writeToSheet(int i, XSSFSheet sheet_stat, XSSFSheet sheet_pa, XSSFSheet sheet_pb, XSSFSheet sheet_pc, int N) {
         Row row = sheet_stat.createRow(i);
         row.createCell(0).setCellValue(String.valueOf(i));
@@ -147,6 +158,7 @@ public class Experiment {
         }
     }
 
+    /** Loop through the agents and calculate the matching size, blocking size, costs and profiles on different sides. */
     public static void statistics() {
         matchingSize = 0;
         blockingSize = 0;
@@ -216,6 +228,7 @@ public class Experiment {
         newProfileAll = Arrays.copyOfRange(profileAll, 0, length);
     }
 
+    /** Reset the matching status of all the agents. */
     public static void reset() {
         for (BasicStructure s: students) {
             s.setPartner(null);

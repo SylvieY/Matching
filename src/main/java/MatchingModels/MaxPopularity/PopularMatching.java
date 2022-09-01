@@ -13,6 +13,9 @@ import java.util.Stack;
 
 /**
  * Popular Matching Algorithm
+ *
+ * @author yangsuiyi  2022-09-01
+ *
  */
 public class PopularMatching {
     BasicStructure[] proposers, disposers;
@@ -20,6 +23,7 @@ public class PopularMatching {
     ArrayList<BasicStructure> vertex, left, right, leftPrime, rightPrime;
     Boolean rPerfect = true;
 
+    /** Constructor with random generator */
     public PopularMatching(IncompletePreference rg) {
         this.proposers = rg.students;
         this.disposers = rg.lecturers;
@@ -30,6 +34,7 @@ public class PopularMatching {
         this.left = new ArrayList<>();
     }
 
+    /** Constructor with two sides of agents */
     public PopularMatching(BasicStructure[] proposers, BasicStructure[] disposers) {
         this.proposers = proposers;
         this.disposers = disposers;
@@ -42,6 +47,7 @@ public class PopularMatching {
         this.left = new ArrayList<>();
     }
 
+    /** Constructor with two sides of agents and the stack of proposers */
     public PopularMatching(BasicStructure[] proposers, BasicStructure[] disposers, Stack<BasicStructure> proposerStack) {
         this.proposers = proposers;
         this.disposers = disposers;
@@ -52,11 +58,14 @@ public class PopularMatching {
         this.left = new ArrayList<>();
     }
 
+    /** Popular Matching starts with a stable matching,
+     * which has to be accomplished before calling this method. */
     public void popularMatchingBasedOnStableMatching() {
         initiate();
         iteration();
     }
 
+    /** Popular Matching starts with empty matching */
     public void popularMatching() {
         SMI.match(proposerStack);
 //        outputMatch();
@@ -65,6 +74,7 @@ public class PopularMatching {
         iteration();
     }
 
+    /** Build the initial left and right partition. */
     public void initiate() {
         right = new ArrayList<>(vertex);
         for (BasicStructure d: disposers) {
@@ -83,6 +93,9 @@ public class PopularMatching {
         }
     }
 
+    /** Each iteration contains two partitions.
+     * One is to move unmatched men from the right partition to the left.
+     * The other is to move unmatched women from the right partition to the left. */
     public void iteration() {
 //        int i=1;
         while (!rPerfect) {
@@ -141,6 +154,8 @@ public class PopularMatching {
 //        outputMatch();
     }
 
+    /** Confirm whether the partition is R-perfect.
+     * @return whether R-perfect */
     public Boolean isRPerfect(ArrayList<BasicStructure> right) {
         for (BasicStructure r: right) {
             if (r.getFree()) {return false;}
@@ -148,6 +163,7 @@ public class PopularMatching {
         return true;
     }
 
+    /** Reset the matching status. */
     public void reset() {
         for (BasicStructure v: vertex) {
             v.setFree(true);
@@ -156,6 +172,9 @@ public class PopularMatching {
         }
     }
 
+    /** Output the matching result:
+     * First show the matched pairs,
+     * Then show the unmatched agents. */
     public void outputMatch() {
         for (BasicStructure s: proposers) {
             if (!s.getFree()) {
@@ -171,15 +190,6 @@ public class PopularMatching {
             if (l.getFree()) {
                 System.out.println(l + " : Unmatched");
             }
-        }
-    }
-
-    public void stableCheck(BasicStructure[] A) {
-        boolean isStable = CheckStable.isStable(A);
-        if (isStable) {
-            System.out.println("Stable Check: PASS");
-        } else {
-            System.out.println("Stable Check: FAIL");
         }
     }
 

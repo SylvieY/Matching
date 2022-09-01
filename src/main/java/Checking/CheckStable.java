@@ -2,6 +2,13 @@ package Checking;
 
 import Structure.BasicStructure;
 
+/**
+ * Check whether the output matching is stable.
+ * If there exists no man-woman pair that is not matched but prefers each other to their partner, the matching is stable.
+ *
+ * @author yangsuiyi 2022-09-01
+ *
+ * */
 public class CheckStable {
     public static boolean isStable(BasicStructure[] S) {
         for (BasicStructure s:S) {

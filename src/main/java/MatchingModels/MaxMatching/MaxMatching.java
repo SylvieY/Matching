@@ -8,17 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-/** Maximum Cardinality Matching Algorithm */
+/**
+ * Maximum Cardinality Matching Algorithm
+ *
+ * @author yangsuiyi
+ *
+ * */
 public class MaxMatching {
     BasicStructure[] proposers, disposers;
     Stack<BasicStructure> proposerStack;
 
+    /** Constructor with random generator */
     public MaxMatching(IncompletePreference rg) {
         this.proposers = rg.students;
         this.disposers = rg.lecturers;
         this.proposerStack = rg.studentStack;
     }
 
+    /** Constructor with two sides of agents */
     public MaxMatching(BasicStructure[] proposers, BasicStructure[] disposers) {
         this.proposers = proposers;
         this.disposers = disposers;
@@ -27,16 +34,19 @@ public class MaxMatching {
             this.proposerStack.push(p);
         }
     }
+
+    /** Constructor with two sides of agents and the stack of proposers */
     public MaxMatching(BasicStructure[] proposers, BasicStructure[] disposers, Stack<BasicStructure> proposerStack) {
         this.proposers = proposers;
         this.disposers = disposers;
         this.proposerStack = proposerStack;
     }
 
+    /** Maximum Matching starts with empty matching */
     public void pureMM() {
         BasicStructure u;
         while ((u=getExposedUnvisited())!=null) {
-            initiate();
+            reset();
             BasicStructure endVertex = searchAP(u);
             if (endVertex!=null){
                 augment(endVertex);
@@ -46,6 +56,8 @@ public class MaxMatching {
 //        outputMatch();
 //        System.out.println("------------------END------------------");
     }
+
+    /** Maximum Matching starts with a stable matching */
     public void workFlow() {
         SMI.match(proposerStack);
         System.out.println("------------Stable Matching------------");
@@ -53,7 +65,7 @@ public class MaxMatching {
         System.out.println("----------Stable Matching Done---------");
         BasicStructure u;
         while ((u=getExposedUnvisited())!=null) {
-            initiate();
+            reset();
 //            System.out.println("Unmatched & Untried Vertex on the left: " + u);
             BasicStructure endVertex = searchAP(u);
             if (endVertex!=null){
@@ -65,10 +77,10 @@ public class MaxMatching {
         outputMatch();
         System.out.println("------------------END------------------");
 
-        /** Starting from unmatched proposer,
-         * Ends at unmatched disposer */
     }
 
+    /** Find an agent on the proposing side that is free and has not been taken as a starting vertex.
+     *  @return such vertex */
     public BasicStructure getExposedUnvisited(){
         for (BasicStructure p: proposers) {
             if (p.getFree() && !p.getStart()) {
@@ -78,6 +90,8 @@ public class MaxMatching {
         return null;
     }
 
+    /** Search for augmenting path
+     * @return the end vertex of the augmenting path */
     public BasicStructure searchAP(BasicStructure u) {
 //        System.out.println("----------Start Finding Augmenting Path----------");
         List<BasicStructure> queue = new ArrayList<>();
@@ -109,8 +123,6 @@ public class MaxMatching {
                         queue.add(w.getPartner());
 //                        System.out.println("Add " + w.getPartner() + " to the queue");
 //                        System.out.println("Queue: " + queue);
-                    } else {
-                        continue;
                     }
                 }
             }
@@ -119,6 +131,8 @@ public class MaxMatching {
         return null;
     }
 
+    /** Augment the matching along the augmenting path found.
+     * Switch the original partner to predecessor. */
     public void augment(BasicStructure endVertex){
         BasicStructure v,w,temp;
         w = endVertex;
@@ -127,7 +141,6 @@ public class MaxMatching {
 //        System.out.println("Update v = " + w + "'s predecessor " + v);
 //        System.out.println(v + "'s start status: " + v.getStart());
         while (!v.getStart() || (v.getStart()&&!v.getFree())) {
-//            System.out.println("Go into the while loop");
             temp = v.getPartner();
 //            temp.setFree(true);
 //            temp.setPartner(null);
@@ -150,13 +163,17 @@ public class MaxMatching {
         w.setPreferencePointer(w.getRankingList()[v.getID()-1]-1);
     }
 
-    public void initiate() {
+    /** Reset the status of disposers to unvisited and no predecessor */
+    public void reset() {
         for (BasicStructure w: disposers) {
             w.setVisited(false);
             w.setPredecessor(null);
         }
     }
 
+    /** Output the matching result:
+     * First show the matched pairs,
+     * Then show the unmatched agents. */
     public void outputMatch() {
         for (BasicStructure s: proposers) {
             if (!s.getFree()) {

@@ -9,12 +9,19 @@ import Structure.Student;
 import java.io.IOException;
 import java.util.Stack;
 
+/**
+ * The main class that runs maximum cardinality popular matching.
+ *
+ * @author yangsuiyi 2022-09-01
+ *
+ * */
 public class MainMP {
     public static int pass = 0;
     public static int fail = 0;
 
     public static void main(String[] args) throws IOException {
         long startTime = System.currentTimeMillis();
+        /** Run Maximum Popular Matching for 10,000 times to calculate the average running time. */
         for (int i=0; i<10000; i++) {
             matchWithRandomData(100,1,2);
             pass++;
@@ -27,19 +34,23 @@ public class MainMP {
         System.out.println("FAIL: " + fail);
     }
 
+    /** Run the Maximum Popular Matching algorithm on randomly generated data */
     public static void matchWithRandomData(int n, int min, int max) throws IOException {
         IncompletePreference rg = new IncompletePreference(n,min,max);
         rg.generateData();
         PopularMatching pm = new PopularMatching(rg);
         pm.popularMatching();
-//        CheckPopular cp = new CheckPopular(rg.students);
-//        if (cp.isPopular()) {
-//            pass += 1;
-//        } else {
-//            fail += 1;
-//        }
+        CheckPopular cp = new CheckPopular(rg.students);
+        if (cp.isPopular()) {
+            pass += 1;
+        } else {
+            fail += 1;
+        }
     }
 
+    /** Run the Maximum Popular Matching algorithm with the input of two sides of agents and the stack of proposers.
+     * The input data is raw without going through any matching algorithms.
+     * @return whether the output matching is popular or not */
     public static Boolean match(BasicStructure[] students, BasicStructure[] lecturers, Stack<BasicStructure> studentStack) {
         PopularMatching pm = new PopularMatching(students, lecturers, studentStack);
         pm.popularMatching();
@@ -47,6 +58,9 @@ public class MainMP {
         return cp.isPopular();
     }
 
+    /** Run the Maximum Popular Matching algorithm with the input of two sides of agents and the stack of proposers.
+     * The input data is the result of the stable matching.
+     * @return whether the output matching is popular or not */
     public static Boolean purePM(BasicStructure[] students, BasicStructure[] lecturers, Stack<BasicStructure> studentStack) {
         PopularMatching pm = new PopularMatching(students, lecturers, studentStack);
         pm.popularMatchingBasedOnStableMatching();
@@ -54,6 +68,8 @@ public class MainMP {
         return cp.isPopular();
     }
 
+    /** Run the Maximum Popular Matching algorithm on given data
+     * Size: 6 */
     public static void match1() {
         Student a1 = new Student(1,6);
         Student a2 = new Student(2,6);
@@ -99,6 +115,8 @@ public class MainMP {
         cp.isPopular();
     }
 
+    /** Run the Maximum Popular Matching algorithm on given data
+     * Size: 8 */
     public static void match2() {
         Student a1 = new Student(1,8);
         Student a2 = new Student(2,8);
@@ -159,6 +177,8 @@ public class MainMP {
         cp.isPopular();
     }
 
+    /** Run the Maximum Popular Matching algorithm on given data
+     * Size: 20 */
     public static void match3() {
         Student a1 = new Student(1,20);
         Student a2 = new Student(2,20);

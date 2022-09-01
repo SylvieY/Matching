@@ -7,6 +7,12 @@ import Structure.Student;
 import java.io.IOException;
 import java.util.*;
 
+/**
+ * Generate complete preference lists for agents
+ *
+ * @author yangsuiyi 2022-09-01
+ *
+ * */
 public class CompletePreference {
     private Random rand = new Random();
     private int N;

@@ -15,6 +15,12 @@ import java.util.*;
 
 import static Interaction.Utils.*;
 
+/**
+ * The class that builds user interaction with command line and reads input through scanner.
+ *
+ * @author yangsuiyi 2022-09-01
+ *
+ * */
 public class MainClass {
     public static Scanner scanner = new Scanner(System.in);
     static BasicStructure[] students, lecturers;
@@ -147,6 +153,11 @@ public class MainClass {
                         break;
                 }
                 break;
+
+            /** Note:
+             * If you are going to paste data in the command line,
+             * make sure keep an "enter" after the last line and paste the "enter" together with the data.
+             * Otherwise, you may have to manually enter an "enter" after pasting the data.  */
             case 2:
                 createAgents(N);
                 outputData();

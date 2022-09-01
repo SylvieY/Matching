@@ -5,6 +5,16 @@ import Structure.BasicStructure;
 
 import java.util.*;
 
+/**
+ * Check whether the output matching is popular.
+ *
+ * Chien-Chung Huang and Telikepalli Kavitha. “Popular matchings in the stable marriage problem”.
+ * In: Information and Computation 222 (2013). 38th International Colloquium on Automata, Languages and Programming (ICALP 2011), pp. 180–194.
+ * ISSN: 0890-5401. DOI: https://doi.org/10.1016/j.ic.2012.10.012.
+ *
+ * @author yangsuiyi 2022-09-01
+ *
+ * */
 public class CheckPopular {
     BasicStructure[] A;
     List<Map.Entry<BasicStructure, BasicStructure>> edgeList;
